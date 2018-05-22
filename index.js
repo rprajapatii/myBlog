@@ -14,11 +14,11 @@ mongoose.connect(config.uri, (err) => {
 	}
 });
 
-app.use(express.static(__dirname + '/client/dist'));
+app.use(express.static(__dirname + '/client/dist/client'));
 
 
 app.get('*', function(req, res){
-	res.sendFile(path.join(__dirname + '/client/dist/index.html'));
+	res.sendFile(path.join(__dirname + '/client/dist/client/index.html'));
 });
 
 app.listen(8080, () => {
