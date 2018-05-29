@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
+const router = express.Router();
 const mongoose = require('mongoose');
 const path = require('path');
+const auth = require('./routes/auth')(router);
 const config = require('./config/database');
+const bodyParser = require('body-parser');
+
 
 mongoose.Promise = global.Promise;
 
@@ -14,7 +18,14 @@ mongoose.connect(config.uri, (err) => {
 	}
 });
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
+
 app.use(express.static(__dirname + '/client/dist/client'));
+app.use('/auth',auth);
 
 
 app.get('*', function(req, res){
