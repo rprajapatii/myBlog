@@ -7,6 +7,8 @@ const auth = require('./routes/auth')(router);
 const config = require('./config/database');
 const bodyParser = require('body-parser');
 
+const cors = require('cors');
+
 
 mongoose.Promise = global.Promise;
 
@@ -18,14 +20,17 @@ mongoose.connect(config.uri, (err) => {
 	}
 });
 
+app.use(cors({
+	origin: 'http://localhost:4200'
+}));
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
  
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/client/dist/client'));
-app.use('/auth',auth);
+app.use('/auth', auth);
 
 
 app.get('*', function(req, res){

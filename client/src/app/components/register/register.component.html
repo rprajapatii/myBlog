@@ -1,23 +1,29 @@
-<form  class="regForm" [formGroup]="regForm" (submit)="onRegSubmit()">
+<div [ngClass] = 'messageClass' role="alert">
+  {{ message }}
+</div>
+
+<form class="regForm" [formGroup]="regForm" (submit)="onRegSubmit()">
   <div class="form-group">
     <div class="custom-form-group clearfix">
-      <label class="form-label" for="email" >
+      <label class="form-label" for="email">
         <span class="input-label-content">Enter email</span>
       </label>
-      <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" formControlName="email" 
-      [ngClass]= "{ 'is-invalid': regForm.controls.email.invalid && 
-      (regForm.controls.email.dirty || regForm.controls.email.touched),
-        'is-valid': !regForm.controls.email.errors }" >
+      <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" formControlName="email" [ngClass]="{ 'is-invalid': (regForm.controls['email'].invalid &&
+      regForm.controls['email'].dirty) || ( !emailValid && regForm.controls['email'].dirty),
+        'is-valid': !regForm.controls['email'].errors || emailValid }" (blur)="checkEmail()" />
     </div>
     <div id="emailHelp" class="form-text text-danger">
-      <small *ngIf = "regForm.controls.email.errors?.required && regForm.controls.email.dirty"> 
+      <small *ngIf="regForm.controls['email'].errors?.required && regForm.controls['email'].dirty">
         Email is required.
       </small>
-      <small *ngIf="(regForm.controls.email.errors?.minlength || regForm.controls.email.errors?.maxlength) && regForm.controls.email.dirty">
+      <small *ngIf="(regForm.controls['email'].errors?.minlength || regForm.controls['email'].errors?.maxlength) && regForm.controls['email'].dirty">
         Email must be at least 6 character long but no more than 30.
       </small>
-       <small *ngIf = "regForm.controls.email.errors?.validateEmail && regForm.controls.email.dirty"> 
+      <small *ngIf="regForm.controls['email'].errors?.validateEmail && regForm.controls['email'].dirty">
         Email must be a valid one.
+      </small>
+      <small *ngIf="emailMessage">
+        {{ emailMessage }}
       </small>
     </div>
   </div>
@@ -27,20 +33,23 @@
       <label class="form-label" for="username">
         <span class="input-label-content">Enter username</span>
       </label>
-      <input type="" formControlName="username" name="username" class="form-control" id="username" aria-describedby="usernameHelp" formControlName="username" minlength="3" maxlength="20"
-      [ngClass]= "{ 'is-invalid': regForm.controls.username.invalid && 
-      (regForm.controls.username.dirty || regForm.controls.username.touched),
-        'is-valid': !regForm.controls.username.errors }">
+      <input type="" formControlName="username" name="username" class="form-control" id="username" aria-describedby="usernameHelp"
+        formControlName="username" minlength="3" maxlength="20" [ngClass]="{ 'is-invalid': (regForm.controls['username'].invalid &&
+      regForm.controls['username'].dirty) || ( !usernameValid &&regForm.controls['username'].dirty),
+        'is-valid': !regForm.controls['username'].errors || usernameValid }" (blur) = "checkUsername()" />
     </div>
     <div id="usernameHelp" class="form-text text-danger">
-      <small *ngIf = "regForm.controls.username.errors?.required && regForm.controls.username.dirty"> 
-       Username is required.
+      <small *ngIf="regForm.controls['username'].errors?.required && regForm.controls['username'].dirty"> 
+        Username is required.
       </small>
-      <small *ngIf="(regForm.controls.username.errors?.minlength || regForm.controls.username.errors?.maxlength) && regForm.controls.username.dirty">
-       Username must be at least 6 character long but no more than 30.
+      <small *ngIf="(regForm.controls['username'].errors?.minlength || regForm.controls['username'].errors?.maxlength) && regForm.controls['username'].dirty">
+        Username must be at least 6 character long but no more than 30.
       </small>
-      <small *ngIf = "regForm.controls.username.errors?.validateUsername && regForm.controls.username.dirty"> 
+      <small *ngIf="regForm.controls['username'].errors?.validateUsername && regForm.controls['username'].dirty">
         Username must not have any special characters.
+      </small>
+      <small *ngIf="usernameMessage">
+        {{ usernameMessage }}
       </small>
     </div>
   </div>
@@ -50,19 +59,18 @@
         <span class="input-label-content">Enter password</span>
       </label>
       <input type="password" formControlName="password" name="password" class="form-control" id="password" aria-describedby="passwordHelp"
-      formControlName="password" minlength="8" maxlength="25"
-      [ngClass]= "{ 'is-invalid': regForm.controls.password.invalid && 
-      (regForm.controls.password.dirty || regForm.controls.password.touched),
-        'is-valid': !regForm.controls.password.errors }">
+        formControlName="password" minlength="8" maxlength="25" [ngClass]="{ 'is-invalid': regForm.controls['password'].invalid &&
+      (regForm.controls['password'].dirty || regForm.controls['password'].touched),
+        'is-valid': !regForm.controls['password'].errors }">
     </div>
     <div id="passwordHelp" class="form-text text-danger">
-      <small *ngIf = "regForm.controls.password.errors?.required && regForm.controls.username.dirty"> 
-       Password is required.
+      <small *ngIf="regForm.controls['password'].errors?.required && regForm.controls['username'].dirty">
+        Password is required.
       </small>
-      <small *ngIf="(regForm.controls.password.errors?.minlength || regForm.controls.username.errors?.maxlength) && regForm.controls.username.dirty">
-       Password must be at least 6 character long but no more than 30.
+      <small *ngIf="(regForm.controls['password'].errors?.minlength || regForm.controls['username'].errors?.maxlength) && regForm.controls['username'].dirty">
+        Password must be at least 6 character long but no more than 30.
       </small>
-      <small *ngIf = "regForm.controls.password.errors?.validatePassword && regForm.controls.password.dirty"> 
+      <small *ngIf="regForm.controls['password'].errors?.validatePassword && regForm.controls['password'].dirty">
         Password must have at least one uppercase, lowercase, special character, and number.
       </small>
     </div>
@@ -72,23 +80,22 @@
       <label class="form-label" for="confirm">
         <span class="input-label-content">Confirm password</span>
       </label>
-      <input type="password"  formControlName="confirm" name="confirm" class="form-control" id="confirm" aria-describedby="confirmHelp"
-      formControlName="confirm" 
-      [ngClass]= "{ 'is-invalid': (regForm.controls.confirm.errors && regForm.controls.confirm.dirty) || (regForm.errors?.matchingPasswords && regForm.controls.confirm.dirty), 
-        'is-valid': !regForm.controls.confirm.errors && !regForm.errors?.matchingPasswords }">
+      <input type="password" formControlName="confirm" name="confirm" class="form-control" id="confirm" aria-describedby="confirmHelp"
+        formControlName="confirm" [ngClass]="{ 'is-invalid': (regForm.controls['confirm'].errors && regForm.controls['confirm'].dirty) || (regForm.errors?.matchingPasswords && regForm.controls['confirm'].dirty),
+        'is-valid': !regForm.controls['confirm'].errors && !regForm.errors?.matchingPasswords }">
     </div>
-  
+
     <div id="confirmHelp" class="form-text text-danger">
-      <small *ngIf = "regForm.controls.confirm.errors?.required && regForm.controls.confirm.dirty">  
-       Confirm is required.
+      <small *ngIf="regForm.controls['confirm'].errors?.required && regForm.controls['confirm'].dirty">
+        Confirm is required.
       </small>
-      <small *ngIf="regForm.errors?.matchingPasswords && regForm.controls.confirm.dirty">
-       Passwords do not match.
+      <small *ngIf="!!regForm.errors?.matchingPasswords && regForm.controls['confirm'].dirty">
+        Passwords do not match.
       </small>
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary" [disabled]="!regForm.valid">
+  <button type="submit" class="btn btn-primary" [disabled]="!regForm.valid || processing">
     Submit
   </button>
 </form>

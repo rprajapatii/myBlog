@@ -1,5 +1,5 @@
 {
-  "name": "myBlog",
+  "name": "myblog",
   "version": "1.0.0",
   "description": "myBlog is a project bulit on node and angular.",
   "main": "index.js",
@@ -23,6 +23,7 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "mongoose": "^5.1.1"
   },
