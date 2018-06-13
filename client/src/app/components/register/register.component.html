@@ -64,11 +64,11 @@
         'is-valid': !regForm.controls['password'].errors }">
     </div>
     <div id="passwordHelp" class="form-text text-danger">
-      <small *ngIf="regForm.controls['password'].errors?.required && regForm.controls['username'].dirty">
+      <small *ngIf="regForm.controls['password'].errors?.required && regForm.controls['password'].dirty">
         Password is required.
       </small>
-      <small *ngIf="(regForm.controls['password'].errors?.minlength || regForm.controls['username'].errors?.maxlength) && regForm.controls['username'].dirty">
-        Password must be at least 6 character long but no more than 30.
+      <small *ngIf="(regForm.controls['password'].errors?.minlength || regForm.controls['password'].errors?.maxlength) && regForm.controls['password'].dirty">
+        Password must be at least 8 character long but no more than 30.
       </small>
       <small *ngIf="regForm.controls['password'].errors?.validatePassword && regForm.controls['password'].dirty">
         Password must have at least one uppercase, lowercase, special character, and number.

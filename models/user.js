@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const bcrypt = require('bcrypt-nodejs');
 
-let emailLenghtChecker = (email) => {
+let emailLengthChecker = (email) => {
 	if(!email){
 		return false;
 	}else{
@@ -29,7 +29,7 @@ let validEmailChecker = (email) => {
 
 const emailValidator = [
 	{	
-		validator: emailLenghtChecker, 
+		validator: emailLengthChecker, 
 		message: "Email must be at least 6 character long but no more than 30."
 	},
 
@@ -119,7 +119,7 @@ const userSchema = new Schema({
 
 
 // Schema Middleware to Encrypt Password
-userSchema.pre('save', function(next) {
+userSchema.pre('save', (next) => {
 	if(!this.isModified('password'))
 		return next();
 
@@ -129,5 +129,9 @@ userSchema.pre('save', function(next) {
     	next();
 	});
 });
+
+userSchema.methods.comparePassword = (password) => {
+	return bcrypt.compareSync(password, this.password);
+  };
 
 module.exports = mongoose.model('User', userSchema);

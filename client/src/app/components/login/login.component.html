@@ -1,0 +1,44 @@
+<div [ngClass] = 'messageClass' role="alert">
+  {{ message }}
+</div>
+
+<form class="loginForm" [formGroup]="loginForm" (submit)="onLoginSubmit()">
+  <div class="form-group">
+    <div class="custom-form-group clearfix">
+      <label class="form-label" for="username">
+        <span class="input-label-content">Enter username</span>
+      </label>
+      <input type="" formControlName="username" name="username" class="form-control" id="username" aria-describedby="usernameHelp"
+        formControlName="username" [ngClass]="{ 'is-invalid': loginForm.controls['username'].errors &&
+      loginForm.controls['username'].dirty,
+        'is-valid': loginForm.controls['username'].valid && loginForm.controls['username'].dirty }" />
+
+    </div>
+    <div id="usernameHelp" class="form-text text-danger">
+      <small *ngIf="loginForm.controls['username'].errors?.required && loginForm.controls['username'].dirty"> 
+        Username is required.
+      </small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="custom-form-group clearfix">
+      <label class="form-label" for="password">
+        <span class="input-label-content">Enter password</span>
+      </label>
+      <input type="password" formControlName="password" name="password" class="form-control" id="password" aria-describedby="passwordHelp"
+        formControlName="password" [ngClass]="{ 'is-invalid': loginForm.controls['password'].errors && loginForm.controls['password'].dirty,
+        'is-valid': loginForm.controls['password'].valid && loginForm.controls['password'].dirty }">
+    </div>
+    <div id="passwordHelp" class="form-text text-danger">
+      <small *ngIf="loginForm.controls['password'].errors?.required && loginForm.controls['password'].dirty">
+        Password is required.
+      </small>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid || processing">
+    Submit
+  </button>
+</form>
+

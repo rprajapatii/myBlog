@@ -11,7 +11,8 @@ export class AuthService {
   constructor( private http: Http ) { }
 
   registerUser(user) {
-    return this.http.post(this.domain + '/auth/register', user).pipe(map(res => res.json()));
+    return this.http.post(this.domain + '/auth/register', user)
+    .pipe(map(res => res.json()));
   }
 
   checkEmail(email) {
