@@ -118,9 +118,9 @@ export class RegisterComponent implements OnInit {
       if (data.success) {
         this.message = data.message;
         this.messageClass = 'alert alert-success';
-        setTimeout(()=>{
-          this.router.navigate(['/Login'])
-        },2000);
+        setTimeout(() => {
+          this.router.navigate( ['/Login'] );
+        }, 2000);
       }  else {
         this.message = data.message;
         this.messageClass = 'alert alert-danger';
