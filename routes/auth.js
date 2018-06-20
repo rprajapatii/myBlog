@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const config = require('../config/database');
+const jwt = require('jsonwebtoken');
 
 module.exports = (router) => {
 	router.post('/register', (req, res) => {
@@ -18,34 +20,29 @@ module.exports = (router) => {
 					});
 					user.save((err)=> {
 						if (err) {
-              // Check if error is an error indicating duplicate account
               if (err.code === 11000) {
-                res.json({ success: false, message: 'Username or e-mail already exists' }); // Return error
+                res.json({ success: false, message: 'Username or e-mail already exists' });
               } else {
-                // Check if error is a validation rror
                 if (err.errors) {
-                  // Check if validation error is in the email field
                   if (err.errors.email) {
-                    res.json({ success: false, message: err.errors.email.message }); // Return error
+                    res.json({ success: false, message: err.errors.email.message });
                   } else {
-                    // Check if validation error is in the username field
                     if (err.errors.username) {
-                      res.json({ success: false, message: err.errors.username.message }); // Return error
+                      res.json({ success: false, message: err.errors.username.message }); 
                     } else {
-                      // Check if validation error is in the password field
                       if (err.errors.password) {
-                        res.json({ success: false, message: err.errors.password.message }); // Return error
+                        res.json({ success: false, message: err.errors.password.message });
                       } else {
-                        res.json({ success: false, message: err }); // Return any other error not already covered
+												res.json({ success: false, message: err });
                       }
                     }
                   }
                 } else {
-                  res.json({ success: false, message: 'Could not save user. Error: ', err }); // Return error if not related to validation
+									res.json({ success: false, message: 'Could not save user. Error: ', err }); 
                 }
               }
             } else {
-              res.json({ success: true, message: 'Acount registered!' }); // Return success
+							res.json({ success: true, message: 'Acount registered!' });
             }
 					});
 				}
@@ -107,7 +104,8 @@ module.exports = (router) => {
               if (!validPassword) {
 								res.json({ success: false, message: 'Password invalid' }); 
               } else {
-                res.json({ success: true, message: 'Success!' });
+								const token = jwt.sign({ userId: user._id }, config.secret, { expiresIn: '24h' });
+                res.json({ success: true, message: 'Success!', token: token, user: { username: user.username } }); 
               }
             }
           }
@@ -116,6 +114,38 @@ module.exports = (router) => {
 			}
 		}
 	});
+
+	router.use((req,res,next) => {
+		const token =	req.headers['authorization'];
+		// console.log('token=',token);
+		if(!token){
+			res.json({ success: false, message:'No token Provided' })
+		}else{
+			jwt.verify(token, config.secret, (err, decoded) => {
+				 if(err){
+					 res.json({ success: false, message: 'Token Invalid.' })
+				 }else{
+					res.decoded = decoded;
+					next();	 
+				}
+			})
+		}
+	});
+
+	router.get('/profile',(req,res) => {
+		// res.send(res.decoded);
+    User.findOne({ _id: res.decoded.userId }).select('username email').exec((err, user) => {
+      if (err) {
+				res.json({ success: false, message: err }); 
+      } else {
+        if (!user) {
+					res.json({ success: false, message: 'User not found' }); 
+        } else {
+					res.json({ success: true, user: user }); 
+        }
+      }
+    });
+  });
 
 	return router;
 }
