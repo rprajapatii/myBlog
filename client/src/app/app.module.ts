@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AuthService } from './services/auth.service';
+import { AuthGuard } from './guards/auth.guard';
+import { NotAuthGuard } from './guards/notAuth.guard';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -36,7 +38,9 @@ import { FlashMessagesModule } from 'angular2-flash-messages/module';
     FlashMessagesModule.forRoot()
   ],
   providers: [
-    AuthService
+    AuthService,
+    AuthGuard,
+    NotAuthGuard
   ],
   bootstrap: [AppComponent]
 })
