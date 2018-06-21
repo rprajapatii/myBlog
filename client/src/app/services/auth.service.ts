@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from 'rxjs/operators';
+import { tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()
 
@@ -64,6 +65,10 @@ export class AuthService {
   getProfile() {
     this.createAuthHeaders();
     return this.http.get(this.domain + '/auth/profile', this.options).pipe(map(res => res.json()) );
+  }
+
+  loggedIn() {
+    return tokenNotExpired();
   }
 
 }
