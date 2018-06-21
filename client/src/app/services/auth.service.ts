@@ -48,6 +48,12 @@ export class AuthService {
     return this.http.post( this.domain + '/auth/login', user ).pipe(map(res => res.json()));
   }
 
+  logout() {
+    this.user = null;
+    this.authToken = null;
+    localStorage.clear();
+  }
+
   storeUserData(token, user) {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
