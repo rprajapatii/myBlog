@@ -4,6 +4,7 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const path = require('path');
 const auth = require('./routes/auth')(router);
+const blog = require('./routes/blogs')(router);
 const config = require('./config/database');
 const bodyParser = require('body-parser');
 
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/client/dist/client'));
 app.use('/auth', auth);
+app.use('/blog',blog);
 
 
 app.get('*', function(req, res){

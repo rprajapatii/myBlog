@@ -3,82 +3,65 @@ mongoose.Promise = global.Promise;
 
 const Schema = mongoose.Schema;
 
-// Validate Function to check blog title length
 let titleLengthChecker = (title) => {
-    // Check if blog title exists
     if (!title) {
-      return false; // Return error
+      return false;
     } else {
-      // Check the length of title
       if (title.length < 5 || title.length > 50) {
-        return false; // Return error if not within proper length
+        return false; 
       } else {
-        return true; // Return as valid title
+        return true; 
       }
     }
   };
   
-  // Validate Function to check if valid title format
   let alphaNumericTitleChecker = (title) => {
-    // Check if title exists
     if (!title) {
-      return false; // Return error
+      return false; 
     } else {
-      // Regular expression to test for a valid title
       const regExp = new RegExp(/^[a-zA-Z0-9 ]+$/);
-      return regExp.test(title); // Return regular expression test results (true or false)
+      return regExp.test(title); 
     }
   };
   
-  // Array of Title Validators
   const titleValidators = [
-    // First Title Validator
     {
       validator: titleLengthChecker,
       message: 'Title must be more than 5 characters but no more than 50'
     },
-    // Second Title Validator
     {
       validator: alphaNumericTitleChecker,
       message: 'Title must be alphanumeric'
     }
   ];
   
-  // Validate Function to check body length
   let bodyLengthChecker = (body) => {
-    // Check if body exists
     if (!body) {
-      return false; // Return error
+      return false;
     } else {
-      // Check length of body
-      if (body.length < 5 || body.length > 500) {
-        return false; // Return error if does not meet length requirement
+      if (body.length < 5 || body.length > 5000) {
+        return false;
       } else {
-        return true; // Return as valid body
+        return true;
       }
     }
   };
   
-  // Array of Body validators
   const bodyValidators = [
-    // First Body validator
     {
       validator: bodyLengthChecker,
       message: 'Body must be more than 5 characters but no more than 500.'
     }
   ];
   
-  // Validate Function to check comment length
   let commentLengthChecker = (comment) => {
-    // Check if comment exists
     if (!comment[0]) {
-      return false; // Return error
+      return false;
     } else {
-      // Check comment length
       if (comment[0].length < 1 || comment[0].length > 200) {
-        return false; // Return error if comment length requirement is not met
+        return false; 
       } else {
-        return true; // Return comment as valid
+        return true; 
       }
     }
   };
@@ -92,22 +75,23 @@ let titleLengthChecker = (title) => {
   
 const blogSchema = new Schema({
     title: {
-        type: string, required: true, validate: titleValidators
+        type: String, required: true, validate: titleValidators
     },
 
     body: {
-        type: string, required: true, validate: bodyValidators
+        type: String, required: true, validate: bodyValidators
     },
 
     createdBy: {
-        type: string
+        type: String
     },
 
     createdAt: {
-        type: Date, default: date.now()
+      type: Date, default: Date.now()
     },
+
     likes: {
-        type: number, default: 0
+        type: Number, Default: 0
     },
 
     likedBy: {
@@ -115,7 +99,7 @@ const blogSchema = new Schema({
     },
 
     dislikes: {
-        type: number, default: 0
+        type: Number, default: 0
     },
 
     dislikedBy: {
@@ -124,10 +108,10 @@ const blogSchema = new Schema({
 
     comments: [{
         comment: {
-            type: string, validate: commentValidators
+            type: String, validate: commentValidators
         },
         commentator: {
-            type: string
+            type: String
         }
     }]
 });
