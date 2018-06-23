@@ -1,0 +1,105 @@
+<div class="container">
+    <div class="row">
+      <div [ngClass] = "messageClass">
+        {{ message }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-outline-secondary mr-2 mb-2" *ngIf='!newBlog' (click) = 'newBlogForm()' >Create your Blog</button>
+
+        <button type="button" class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'loadingBlogs' *ngIf='!newBlog' (click)='reloadBlogs()' >
+            <i fa [name]="'refresh'" [pull]="'left'"></i>
+          Refresh
+        </button>
+      </div>
+  </div>
+    <div *ngIf = '!newBlog'>
+    <div class="row">
+
+        <div class="blog-post">
+          <h2 class="blog-post-title">Sample blog post</h2>
+          <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
+
+          <p>This blog post shows a few different types of content that's supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
+
+
+
+          <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
+          <blockquote>
+            <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+          </blockquote>
+          <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+          <h2>Heading</h2>
+          <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+          <h3>Sub-heading</h3>
+          <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+          <pre><code>Example code block</code></pre>
+          <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
+          <h3>Sub-heading</h3>
+          <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+          <ul>
+            <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
+            <li>Donec id elit non mi porta gravida at eget metus.</li>
+            <li>Nulla vitae elit libero, a pharetra augue.</li>
+          </ul>
+          <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
+          <ol>
+            <li>Vestibulum id ligula porta felis euismod semper.</li>
+            <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
+            <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
+          </ol>
+          <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
+          <div class="row sub-section">
+            <button type="button" class="btn btn-outline-secondary mr-2 mb-2">
+                <i fa [name]="'edit'" [pull]="'left'"></i>Edit
+            </button>
+            <button type="button" class="btn btn-outline-secondary mr-2 mb-2">
+                <i fa [name]="'trash'" [pull]="'left'"></i>
+                Delete</button>
+
+          <!-- Likes Dropdown  -->
+
+          <div class="dropdown">
+              <button type="button" class="btn dropbtn btn-outline-secondary mr-2 mb-2">
+                  <i fa [name]="'thumbs-o-up'" [pull]="'left'"></i>
+                Like</button>
+              <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
+
+          <!-- Dislikes Dropdown  -->
+          <div class="dropdown">
+            <button type="button" class="btn dropbtn btn-outline-secondary mr-2 mb-2">
+                <i fa [name]="'thumbs-o-down'" [pull]="'left'"></i>
+              Dislike</button>
+            <div class="dropdown-content">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
+          </div>
+
+          <div class="row">
+            <div style="width: 100%;">
+                <button type="button" class="btn btn-outline-secondary mr-2 mb-2" (click) = 'draftComment()' >Post Comment</button>
+            </div>
+            <form action="">
+                <form>
+                <textarea name="comment" rows="10" class="form-control"></textarea>
+                <button type="button" name="button" class="btn btn-outline-secondary mr-2 mb-2">Submit Post</button>
+                <button type="button" name="button" class="btnbtn-outline-secondary mr-2 mb-2">Cancel</button>
+              </form>
+            </form>
+          </div>
+
+
+        </div><!-- /.blog-post -->
+      </div>
+
+      </div><!-- /.blog-main -->
+    </div>

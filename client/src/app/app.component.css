@@ -1,0 +1,7 @@
+:host /deep/ .sub-section{
+  margin-bottom: 1rem;
+}
+
+body{
+  background: red;
+}

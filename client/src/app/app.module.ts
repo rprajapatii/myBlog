@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
@@ -17,6 +18,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { FlashMessagesModule } from 'angular2-flash-messages/module';
+import { BlogComponent } from './components/blog/blog.component';
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { FlashMessagesModule } from 'angular2-flash-messages/module';
     DashboardComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import { FlashMessagesModule } from 'angular2-flash-messages/module';
     ReactiveFormsModule,
     FormsModule,
     HttpModule,
-    FlashMessagesModule.forRoot()
+    FlashMessagesModule.forRoot(),
+    Angular2FontawesomeModule
   ],
   providers: [
     AuthService,
