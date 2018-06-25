@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (router) => {
 	router.post('/newBlog', (req, res) => {
-        // res.send('test');
         if( !req.body.title ) {
             res.json({ success: false, message: "You must provide title for the blog." });
         }else{

@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
+import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { NotAuthGuard } from './guards/notAuth.guard';
+
+import { BlogService } from './services/blog.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -44,7 +46,8 @@ import { BlogComponent } from './components/blog/blog.component';
   providers: [
     AuthService,
     AuthGuard,
-    NotAuthGuard
+    NotAuthGuard,
+    BlogService
   ],
   bootstrap: [AppComponent]
 })

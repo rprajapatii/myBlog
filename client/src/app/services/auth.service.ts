@@ -27,7 +27,6 @@ export class AuthService {
 
   loadToken() {
     this.authToken = ' ' + localStorage.getItem('token');
-    // console.log('token form authser page', this.authToken);
   }
 
   registerUser(user) {

@@ -50,7 +50,7 @@ let titleLengthChecker = (title) => {
   const bodyValidators = [
     {
       validator: bodyLengthChecker,
-      message: 'Body must be more than 5 characters but no more than 500.'
+      message: 'Body must be more than 5 characters but no more than 5000.'
     }
   ];
   
