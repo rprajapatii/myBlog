@@ -30,4 +30,10 @@ export class BlogService {
     ));
   }
 
+  getAllBlogs() {
+    this.createAuthHeaders();
+    return this.http.get(this.domain + '/blogs/getAllBlogs', this.options)
+    .pipe( map(res =>  res.json() ));
+  }
+
 }

@@ -115,22 +115,22 @@ module.exports = (router) => {
 		}
 	});
 
-	// router.use((req,res,next) => {
-	// 	const token =	req.headers['authorization'];
-	// 	// console.log('token=',token);
-	// 	if(!token){
-	// 		res.json({ success: false, message:'No token Provided' })
-	// 	}else{
-	// 		jwt.verify(token, config.secret, (err, decoded) => {
-	// 			 if(err){
-	// 				 res.json({ success: false, message: 'Token Invalid.' })
-	// 			 }else{
-	// 				res.decoded = decoded;
-	// 				next();	 
-	// 			}
-	// 		})
-	// 	}
-	// });
+	router.use((req,res,next) => {
+		const token =	req.headers['authorization'];
+		// console.log('token=',token);
+		if(!token){
+			res.json({ success: false, message:'No token Provided' })
+		}else{
+			jwt.verify(token, config.secret, (err, decoded) => {
+				 if(err){
+					 res.json({ success: false, message: 'Token Invalid.' })
+				 }else{
+					res.decoded = decoded;
+					next();	 
+				}
+			})
+		}
+	});
 
 	router.get('/profile',(req,res) => {
 		// res.send(res.decoded);

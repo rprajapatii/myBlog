@@ -91,7 +91,7 @@ const blogSchema = new Schema({
     },
 
     likes: {
-        type: Number, Default: 0
+        type: Number, default: 0
     },
 
     likedBy: {
