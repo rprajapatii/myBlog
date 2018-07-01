@@ -55,13 +55,66 @@ module.exports = (router) => {
                 res.json({ success: false, message: err })
             } else {
                 if(!blogs){
-                    res.json({ success: false, message: 'There is no Blog' })
+                    res.json({ success: false, message: 'There is no Blog.' })
                 } else {
                     res.json({ success: true, blogs: blogs })
                 }
             }
         }).sort({ '_id': -1 })
     });
+
+    router.get('/singleBlog/:id',(req, res) => {
+        // res.send('test');
+        if(!req.params.id) {
+            res.json({ success: false, message: 'No blog id is provied.' })
+        } else {
+            Blog.findOne({_id: req.params.id}, (err,blog) => {
+                if(err){
+                    res.json({ success: false, message: 'Valid blog id is not provied.' })
+                } else {
+                    res.json({ success: true, blog: blog })
+                }
+            })  
+        }
+    });
+
+    router.put('/updateBlog',(req, res) => {
+        // res.send(req.body._id);
+        console.log('req.body._id = ',req.body._id);
+        if(!req.body._id){
+            res.json({ success: false, message: 'No blog id is provided.' })
+        } else {
+            Blog.findOne({_id: req.body._id}, (err, blog) => {
+                if(err) {
+                    res.json({ success: false, message: 'Blog id is not valid.' })
+                }else {
+                    if(!blog){
+                        res.json({ success: false, message: 'Blog id was not found.'})
+                    } else {
+                        User.findOne({ _id: res.decoded.userId },(err, user) => {
+                            if(err) {
+                                res.json({ success:false, message: 'You are not an authorized user.' })
+                            } else {
+                                if( user.username !== blog.createdBy ) {
+                                    res.json({ success: false, message:'Only the user who created the blog can update.' })
+                                } else {
+                                    blog.title = req.body.title;
+                                    blog.body = req.body.body;
+                                    blog.save((err) => {
+                                        if(err) {
+                                            res.json({ success: false, message: err })
+                                        } else {
+                                            res.json({ success: true, message: 'Blog Updated!' })
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    }); 
 
     return router;
 }

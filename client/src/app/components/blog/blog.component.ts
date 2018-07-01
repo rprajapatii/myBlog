@@ -123,7 +123,7 @@ export class BlogComponent implements OnInit {
   getAllBlogs() {
     this.blogService.getAllBlogs().subscribe(data => {
       this.allBlogs = data.blogs;
-      console.log(data);
+      // console.log(data);
     });
   }
 

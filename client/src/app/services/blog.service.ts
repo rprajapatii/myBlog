@@ -36,4 +36,17 @@ export class BlogService {
     .pipe( map(res =>  res.json() ));
   }
 
+  getSingleBlog(id) {
+    this.createAuthHeaders();
+    return this.http.get(this.domain + '/blogs/singleBlog/' + id, this.options)
+    .pipe( map(res => res.json() ));
+  }
+
+  updateBlog(blog) {
+    this.createAuthHeaders();
+    console.log('inside authBlog service');
+    return this.http.put(this.domain + '/blogs/updateBlog', blog , this.options)
+    .pipe( map(res => res.json() ));
+  }
+
 }

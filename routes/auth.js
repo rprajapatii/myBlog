@@ -123,9 +123,11 @@ module.exports = (router) => {
 		}else{
 			jwt.verify(token, config.secret, (err, decoded) => {
 				 if(err){
-					 res.json({ success: false, message: 'Token Invalid.' })
+					 res.json({ success: false, message: 'Token Invalid.' + err });
 				 }else{
 					res.decoded = decoded;
+					console.log(res.decoded);
+					console.log('********'); 
 					next();	 
 				}
 			})

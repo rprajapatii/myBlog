@@ -1,0 +1,59 @@
+<div class="container">
+  <h3>Edit Blog</h3>
+
+  <div [ngClass]='messageClass' *ngIf='message'>
+    {{ message }}
+  </div>
+
+  <!-- form for new Blog starts -->
+  <div>
+    <form class="form" [formGroup]='form' (submit)="editBlogSubmit()" *ngIf = '!loading'>
+        <div class="form-group">
+          <div class="custom-form-group clearfix">
+              <label class="form-label" for="title">
+                <span class="input-label-content"> Blog Title </span>
+              </label>
+              <input type="text" name="title" class="form-control" id="title" aria-describedby="titleHelp" formControlName="title" [(ngModel)]= "blog.title" [ngClass] = "{ 'is-valid': form.controls['title'].valid,'is-invalid': form.controls['title'].errors && form.controls['title'].dirty }" />
+            </div>
+          <div id="titleHelp" class="form-text text-danger">
+            <small *ngIf="form.controls['title'].errors?.required && form.controls['title'].dirty">
+              Title is required.
+            </small>
+            <small *ngIf="(form.controls['title'].errors?.minlength || form.controls['title'].errors?.maxlength) && form.controls['title'].dirty">
+              Title must be at least 5 character long but no more than 50.
+            </small>
+            <small *ngIf="form.controls['title'].errors?.alphaNumericValidation && form.controls['title'].dirty">
+                Title must contain only letters and numbers.
+              </small>
+          </div>
+        </div>  <!-- close form group -->
+
+        <div class="form-group">
+          <div class="custom-form-group clearfix">
+              <label class="form-label" for="body">
+                <span class="input-label-content"> Write your Blog </span>
+              </label>
+              <textarea rows = '10' name="body" class="form-control" id="body" aria-describedby="bodyHelp" formControlName="body" [(ngModel)]="blog.body" [ngClass] = "{ 'is-valid': form.controls['body'].valid,'is-invalid': form.controls['body'].errors && form.controls['body'].dirty }" >
+              </textarea>
+            </div>
+          <div id="bodyHelp" class="form-text text-danger">
+            <small *ngIf="form.controls['body'].errors?.required && form.controls['body'].dirty">
+              Body of the blog is required.
+            </small>
+            <small *ngIf="(form.controls['body'].errors?.minlength || form.controls['body'].errors?.maxlength) && form.controls['body'].dirty">
+              Body of the blog must be at least 5 character long but no more than 5000.
+            </small>
+          </div>
+        </div>  <!-- close form group -->
+
+        <button class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'processing' (click) = 'onBackClick()'>Back</button>
+
+        <button class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'processing' (click) = 'onDeleteClick()'>Delete</button>
+
+        <button type="submit" class="btn btn-outline-secondary mr-2 mb-2" [disabled] = '!form.valid ||processing'>Submit</button>
+      </form>
+</div>
+<!-- form for new Blog ends -->
+
+</div>
+
