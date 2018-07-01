@@ -84,9 +84,9 @@
               <button type="button" class="btn btn-outline-secondary mr-2 mb-2"[routerLink]="['/edit-blog/', blog._id]" *ngIf = "username === blog.createdBy">
                   <i fa [name]="'edit'" [pull]="'left'"></i>Edit
               </button>
-              <button type="button" class="btn btn-outline-secondary mr-2 mb-2" [routerLink]="['/delete-blog/', blog._id]"*ngIf="username === blog.createdBy">
+              <!-- <button type="button" class="btn btn-outline-secondary mr-2 mb-2" [routerLink]="['/delete-blog/', blog._id]" *ngIf="username === blog.createdBy">
                   <i fa [name]="'trash'" [pull]="'left'"></i>
-                  Delete</button>
+                  Delete</button> -->
 
             <!-- Likes Dropdown  -->
 

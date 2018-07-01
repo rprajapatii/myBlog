@@ -44,9 +44,14 @@ export class BlogService {
 
   updateBlog(blog) {
     this.createAuthHeaders();
-    console.log('inside authBlog service');
+    // console.log('inside authBlog service');
     return this.http.put(this.domain + '/blogs/updateBlog', blog , this.options)
     .pipe( map(res => res.json() ));
+  }
+
+  deleteBlog(id) {
+    this.createAuthHeaders();
+    return this.http.delete(this.domain + '/blogs/deleteBlog/' + id, this.options).pipe( map(res => res.json() ));
   }
 
 }

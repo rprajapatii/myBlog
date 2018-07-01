@@ -69,7 +69,6 @@ export class EditBlogComponent implements OnInit {
   editBlogSubmit() {
     this.blogService.updateBlog(this.blog).subscribe( data => {
       // console.log('data = ', data);
-      
     this.processing = true;
     this.disableForm();
 
@@ -96,7 +95,6 @@ export class EditBlogComponent implements OnInit {
   }
 
   onDeleteClick() {
-
   }
 
   ngOnInit() {
