@@ -48,12 +48,18 @@
 
         <button class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'processing' (click) = 'onBackClick()'>Back</button>
 
-        <button class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'processing' (click) = 'onDeleteClick()'>Delete</button>
+        <!-- <a [routerLink]="['/delete-blog/', blog._id]">
+          <button class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'processing'>Delete</button>
+        </a> -->
+
+        <button type="button" class="btn btn-outline-secondary mr-2 mb-2" data-toggle="modal" data-target="#deleteModal">
+          Delete
+        </button>
 
         <button type="submit" class="btn btn-outline-secondary mr-2 mb-2" [disabled] = '!form.valid || processing'>Submit</button>
       </form>
 </div>
 <!-- form for new Blog ends -->
-
+  <app-delete-blog></app-delete-blog>
 </div>
 
