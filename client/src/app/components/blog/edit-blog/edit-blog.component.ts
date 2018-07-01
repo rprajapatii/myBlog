@@ -10,12 +10,12 @@ import { BlogService } from '../../../services/blog.service';
   styleUrls: ['./edit-blog.component.css']
 })
 export class EditBlogComponent implements OnInit {
-   blog;
+  blog;
   form: FormGroup;
   message;
   messageClass;
   newBlog: false;
-  processing: false;
+  processing = false;
   currentUrl;
   loading = true;
 
@@ -27,6 +27,16 @@ export class EditBlogComponent implements OnInit {
             ) {
               this.updateForm();
             }
+
+  enableForm() {
+    this.form.controls['title'].enable();
+    this.form.controls['body'].enable();
+  }
+
+  disableForm() {
+    this.form.controls['title'].disable();
+    this.form.controls['body'].disable();
+  }
 
   updateForm() {
     this.form = this.formBuilder.group({
@@ -59,17 +69,25 @@ export class EditBlogComponent implements OnInit {
   editBlogSubmit() {
     this.blogService.updateBlog(this.blog).subscribe( data => {
       // console.log('data = ', data);
-      if ( !data.success ) {
-        this.messageClass = 'alert alert-danger',
-        this.message = data.message;
-      } else {
-        this.messageClass = 'alert alert-success',
-        this.message = data.message;
+      
+    this.processing = true;
+    this.disableForm();
 
-        setTimeout(() => {
-          this.router.navigate(['/blog']);
-        }, 2000);
-      }
+    if ( !data.success ) {
+      this.messageClass = 'alert alert-danger',
+      this.message = data.message;
+      this.processing = false;
+      this.enableForm();
+    } else {
+      this.messageClass = 'alert alert-success',
+      this.message = data.message;
+
+      setTimeout(() => {
+        this.router.navigate(['/blog']);
+        this.processing = false;
+        this.enableForm();
+      }, 2000);
+    }
     });
   }
 
