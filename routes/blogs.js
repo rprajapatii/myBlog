@@ -154,5 +154,125 @@ module.exports = (router) => {
         }
     });
 
+    router.put('/likeBlog',(req,res) => {
+        if ( !req.body.id ) {
+            res.json({ success: false, message: 'Blog id is not provied.' });
+        } else {
+            Blog.findOne({ _id: req.body.id },(err,blog) => {
+                if (err) {
+                    res.json({ success: false, message: 'Blog id is not valid.' })
+                } else {
+                    if(!blog){
+                        res.json({ success: false, message: 'Blog is not found.' })
+                    } else {
+                        User.findOne({_id: res.decoded.userId},(err, user) => {
+                            if(err) {
+                                res.json({ success: false, message: err  });
+                            } else {
+                                if(!user){
+                                    res.json({ success: false, message: 'User authentication failed.' })
+                                }else{
+                                    if( user.username === blog.createdBy ){
+                                        res.json({ success: false, message: 'You can not like your own blog.' })
+                                    }else{
+                                        if(blog.likedBy.includes(user.username)){
+                                            res.json({ success: false, message: 'You can not like the blog more than once.' })
+                                        } else{
+                                            if (blog.dislikedBy.includes(user.username)) {
+                                               blog.dislikes--;
+                                               const indofdisliker = blog.dislikedBy.indexOf(user.username);
+                                               blog.dislikedBy.splice(indofdisliker,1);
+                                               blog.likes++;
+                                               blog.likedBy.push(user.username);
+                                               blog.save((err) => {
+                                                    if(err){
+                                                        res.json({ success: false, message: 'Something went wrong.' })
+                                                    }else{
+                                                        res.json({ success: true, message: 'Blog liked!' })
+                                                    }
+                                                })
+                                            } else {
+                                                blog.likes++;
+                                                blog.likedBy.push(user.username);
+                                                blog.save((err) => {
+                                                    if(err){
+                                                        res.json({ success: false, message: 'Something went wrong.' })
+                                                    }else{
+                                                        res.json({ success: true, message: 'Blog liked!' })
+                                                    }
+                                                })
+                                            }
+                                    
+                                        }
+                                    }
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    });
+
+    router.put('/dislikeBlog',(req,res) => {
+        if ( !req.body.id ) {
+            res.json({ success: false, message: 'Blog id is not provied.' });
+        } else {
+            Blog.findOne({ _id: req.body.id },(err,blog) => {
+                if (err) {
+                    res.json({ success: false, message: 'Blog id is not valid.' })
+                } else {
+                    if(!blog){
+                        res.json({ success: false, message: 'Blog is not found.' })
+                    } else {
+                        User.findOne({_id: res.decoded.userId},(err, user) => {
+                            if(err) {
+                                res.json({ success: false, message: err  });
+                            } else {
+                                if(!user){
+                                    res.json({ success: false, message: 'User authentication failed.' })
+                                }else{
+                                    if( user.username === blog.createdBy ){
+                                        res.json({ success: false, message: 'You can not dislike your own blog.' })
+                                    }else{
+                                        if(blog.dislikedBy.includes(user.username)){
+                                            res.json({ success: false, message: 'You can not dislike the blog more than once.' })
+                                        } else{
+                                            if (blog.likedBy.includes(user.username)) {
+                                               blog.likes--;
+                                               const indofliker = blog.likedBy.indexOf(user.username);
+                                               blog.likedBy.splice(indofliker,1);
+                                               blog.dislikes++;
+                                               blog.dislikedBy.push(user.username);
+                                               blog.save((err) => {
+                                                    if(err){
+                                                        res.json({ success: false, message: 'Something went wrong.' })
+                                                    }else{
+                                                        res.json({ success: true, message: 'Blog disliked!' })
+                                                    }
+                                                })
+                                            } else {
+                                                blog.dislikes++;
+                                                blog.dislikedBy.push(user.username);
+                                                blog.save((err) => {
+                                                    if(err){
+                                                        res.json({ success: false, message: 'Something went wrong.' })
+                                                    }else{
+                                                        res.json({ success: true, message: 'Blog disliked!' })
+                                                    }
+                                                })
+                                            }
+                                    
+                                        }
+                                    }
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        }
+    });
+
     return router;
 }

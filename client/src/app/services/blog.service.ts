@@ -54,4 +54,21 @@ export class BlogService {
     return this.http.delete(this.domain + '/blogs/deleteBlog/' + id, this.options).pipe( map(res => res.json() ));
   }
 
+  likeBlog(id) {
+    const blogData = { id: id };
+    return this.http.put(this.domain + '/blogs/likeBlog' , blogData , this.options)
+    .pipe(  map(res => {
+      console.log(res.json());
+      res.json();
+    }));
+  }
+
+  dislikeBlog(id) {
+    const blogData = { id: id };
+    return this.http.put(this.domain + '/blogs/dislikeBlog' , blogData , this.options)
+    .pipe(  map(res => {
+      console.log(res.json());
+      res.json();
+    }));
+  }
 }

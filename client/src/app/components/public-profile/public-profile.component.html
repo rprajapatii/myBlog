@@ -1,0 +1,11 @@
+<h2>Profile</h2>
+
+<div [ngClass]='messageClass' *ngIf='message'>
+  {{message}}
+</div>
+
+<div [ngClass]='messageClass' *ngIf='!message'>
+  <p>username: {{username}} </p>
+  <p>email: {{email}} </p>
+</div>
+
