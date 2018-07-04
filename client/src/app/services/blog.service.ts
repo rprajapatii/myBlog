@@ -71,4 +71,15 @@ export class BlogService {
       res.json();
     }));
   }
+
+  commentBlog(id, comment) {
+    this.createAuthHeaders();
+    const blogData = {
+        id: id,
+        comment: comment
+    };
+    return this.http.put(this.domain + '/blogs/comment', blogData, this.options)
+    .pipe( map(res => res.json() ));
+  }
+
 }

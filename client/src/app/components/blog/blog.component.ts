@@ -12,6 +12,7 @@ import { BlogService } from './../../services/blog.service';
 
 export class BlogComponent implements OnInit {
   form: FormGroup;
+  commentForm: FormGroup;
 
   message;
   messageClass: string;
@@ -20,6 +21,8 @@ export class BlogComponent implements OnInit {
   processing = false;
   username: string;
   allBlogs;
+  newComment = [];
+  enabledComments = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,6 +30,7 @@ export class BlogComponent implements OnInit {
     private blogService: BlogService
   ) {
     this.createForm();
+    this.createCommentForm();
    }
 
   createForm() {
@@ -45,6 +49,17 @@ export class BlogComponent implements OnInit {
         ])
       ],
 
+    });
+  }
+
+  createCommentForm() {
+    this.commentForm = this.formBuilder.group({
+      comment: ['',   Validators.compose([
+                  Validators.required,
+                  Validators.minLength(1),
+                  Validators.maxLength(200)
+                ])
+              ]
     });
   }
 
@@ -68,10 +83,6 @@ export class BlogComponent implements OnInit {
     setTimeout(() => {
       this.loadingBlogs = false;
     }, 4000);
-  }
-
-  draftComment() {
-
   }
 
   onBackClick() {
@@ -138,6 +149,69 @@ export class BlogComponent implements OnInit {
       this.getAllBlogs();
     });
   }
+
+  disableCommentForm() {
+    this.commentForm.controls['comment'].disable();
+  }
+
+  enableCommentForm() {
+    this.commentForm.controls['comment'].enable();
+  }
+
+  draftComment(id) {
+    this.commentForm.reset();
+    this.newComment = [];
+    this.newComment.push(id);
+  }
+
+  oncommentSubmit(id) {
+    this.processing = true;
+    const comment = this.commentForm.get('comment').value;
+    this.blogService.commentBlog(id, comment).subscribe(data => {
+      console.log( 'data from commitSubmit =', data );
+      this.getAllBlogs();
+      const index = this.newComment.indexOf(id);
+      console.log('index=', this.newComment.indexOf(id));
+      this.newComment.splice(index, 1);
+      this.commentForm.reset();
+      this.processing = false;
+      if (this.enabledComments.indexOf(id) < 0) {
+        this.onShowCommentClick(id);
+      }
+    });
+  }
+
+  cancelCommit(id) {
+    const index = this.newComment.indexOf(id);
+    this.newComment.splice(index, 1);
+    this.commentForm.reset();
+    this.enableCommentForm();
+    this.processing = false;
+  }
+
+  onShowCommentClick(id) {
+    this.enabledComments.push(id);
+  }
+
+  onHideCommentClick(id) {
+    const index = this.enabledComments.indexOf(id);
+    this.enabledComments.splice(index, 1);
+  }
+
+
+  // this.disableCommentForm(); // Disable form while saving comment to database
+  //   this.processing = true; // Lock buttons while saving comment to database
+  //   const comment = this.commentForm.get('comment').value; // Get the comment value to pass to service function
+  //   // Function to save the comment to the database
+  //   this.blogService.postComment(id, comment).subscribe(data => {
+  //     this.getAllBlogs(); // Refresh all blogs to reflect the new comment
+  //     const index = this.newComment.indexOf(id); // Get the index of the blog id to remove from array
+  //     this.newComment.splice(index, 1); // Remove id from the array
+  //     this.enableCommentForm(); // Re-enable the form
+  //     this.commentForm.reset(); // Reset the comment form
+  //     this.processing = false; // Unlock buttons on comment form
+  //     if (this.enabledComments.indexOf(id) < 0) this.expand(id); // Expand comments for user on comment submission
+  //   });
 
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {

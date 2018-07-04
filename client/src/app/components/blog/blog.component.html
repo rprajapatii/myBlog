@@ -29,7 +29,7 @@
                   <span class="input-label-content"> Blog Title </span>
                 </label>
                 <input type="text" name="title" class="form-control" id="title" aria-describedby="titleHelp" formControlName="title" [ngClass] = "{ 'is-valid': form.controls['title'].valid,'is-invalid': form.controls['title'].errors && form.controls['title'].dirty }" />
-              </div>
+            </div>
             <div id="titleHelp" class="form-text text-danger">
               <small *ngIf="form.controls['title'].errors?.required && form.controls['title'].dirty">
                 Title is required.
@@ -113,15 +113,47 @@
 
             <div class="row">
               <div style="width: 100%;">
-                  <button type="button" class="btn btn-outline-secondary mr-2 mb-2" (click) = 'draftComment()' >Post Comment</button>
+                  <button type="button" class="btn btn-outline-secondary mr-2 mb-2" (click) = 'draftComment(blog._id)' >Post Comment</button>
               </div>
-              <form action="">
-                  <form>
-                  <textarea name="comment" rows="10" class="form-control"></textarea>
-                  <button type="button" name="button" class="btn btn-outline-secondary mr-2 mb-2">Submit Post</button>
-                  <button type="button" name="button" class="btnbtn-outline-secondary mr-2 mb-2">Cancel</button>
+              <div *ngIf='newComment.indexOf(blog._id) > -1'>
+                <form [formGroup]="commentForm" (submit)='oncommentSubmit(blog._id)'>
+                  <div class="form-group">
+                      <div class="custom-form-group clearfix">
+                          <textarea rows='5' name='comment' class="form-control" id='comment' aria-describedby="titleHelp" formControlName='comment' [ngClass]="{ 'is-valid': commentForm.controls['comment'].valid, 'is-invalid': commentForm.controls['comment'].errors && commentForm.controls['comment'].dirty }"></textarea>
+                      </div>
+                      <div id="commentHelp" class="form-text text-danger">
+                        <small *ngIf="commentForm.controls['comment'].errors?.required && commentForm.controls['comment'].dirty">
+                          Comment is required.
+                        </small>
+                        <small *ngIf="(commentForm.controls['comment'].errors?.minlength || commentForm.controls['comment'].errors?.maxlength) && commentForm.controls['comment'].dirty">
+                          Comment must be at least 1 character long but no more than 200.
+                        </small>
+                      </div>
+                    </div>  <!-- close form group -->
+                  <button type="submit" name="button" class="btn btn-outline-secondary mr-2 mb-2" [disabled]='processing || !commentForm.valid'>Submit Post</button>
+
+                  <button type="button" name="button" class="btn btn-outline-secondary mr-2 mb-2" [disabled]='processing' (click)='cancelCommit(blog._id)'>Cancel</button>
                 </form>
-              </form>
+              </div>
+
+              <div *ngIf="enabledComments.indexOf(blog._id) === -1 && blog.comments.length > 0">
+                <button type="button" class="btn btn-outline-secondary mr-2 mb-2" (click) ='onShowCommentClick(blog._id)'>
+                Show comments
+                </button>
+              </div>
+
+              <div *ngIf="enabledComments.indexOf(blog._id) > -1">
+                  <button type="button" class="btn btn-outline-secondary mr-2 mb-2" (click) ='onHideCommentClick(blog._id)'>
+                  Hide comments
+                  </button>
+                </div>
+
+
+                <div *ngIf="enabledComments.indexOf(blog._id) > -1">
+                  <div *ngFor="let comment of blog.comments">
+                    <strong>{{ comment.commentator }}:</strong> {{ comment.comment }}
+                  </div>
+                </div>
             </div>
         </div> <!-- close of blog-post -->
       </div> <!-- close of row -->
