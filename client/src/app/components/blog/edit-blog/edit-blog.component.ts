@@ -1,3 +1,4 @@
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -18,6 +19,7 @@ export class EditBlogComponent implements OnInit {
   processing = false;
   currentUrl;
   loading = true;
+  defaultBodyValue;
 
   constructor( private formBuilder: FormBuilder,
                private location: Location,
@@ -66,6 +68,11 @@ export class EditBlogComponent implements OnInit {
     }
   }
 
+
+  onBodyTextEditorKeyUp(textValue) {
+    this.form.controls['body'].setValue(textValue);
+  }
+
   editBlogSubmit() {
     this.blogService.updateBlog(this.blog).subscribe( data => {
       // console.log('data = ', data);
@@ -105,7 +112,8 @@ export class EditBlogComponent implements OnInit {
       this.messageClass = 'alert alert-danger';
       this.message = 'Blog not found';
      } else {
-       this.blog = data.blog;
+      this.blog = data.blog;
+      this.defaultBodyValue = this.blog.body;
       this.loading = false;
      }
 

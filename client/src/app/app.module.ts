@@ -24,6 +24,7 @@ import { BlogComponent } from './components/blog/blog.component';
 import { EditBlogComponent } from './components/blog/edit-blog/edit-blog.component';
 import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.component';
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
+import { EditorComponent } from './components/helpers/editor/editor.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { PublicProfileComponent } from './components/public-profile/public-profi
     BlogComponent,
     EditBlogComponent,
     DeleteBlogComponent,
-    PublicProfileComponent
+    PublicProfileComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,7 @@ import { PublicProfileComponent } from './components/public-profile/public-profi
     FormsModule,
     HttpModule,
     FlashMessagesModule.forRoot(),
-    Angular2FontawesomeModule
+    Angular2FontawesomeModule,
   ],
   providers: [
     AuthService,

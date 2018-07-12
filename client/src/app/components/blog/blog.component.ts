@@ -99,9 +99,15 @@ export class BlogComponent implements OnInit {
     this.form.controls['body'].disable();
   }
 
+  onBodyTextEditorKeyUp(textValue) {
+    this.form.controls['body'].setValue(textValue);
+  }
+
   onBlogSubmit() {
     this.processing = true;
     this.disableForm();
+
+    console.log('value of body', this.form.controls['body'].value);
 
     const blog = {
       title: this.form.controls['title'].value,
@@ -197,21 +203,6 @@ export class BlogComponent implements OnInit {
     const index = this.enabledComments.indexOf(id);
     this.enabledComments.splice(index, 1);
   }
-
-
-  // this.disableCommentForm(); // Disable form while saving comment to database
-  //   this.processing = true; // Lock buttons while saving comment to database
-  //   const comment = this.commentForm.get('comment').value; // Get the comment value to pass to service function
-  //   // Function to save the comment to the database
-  //   this.blogService.postComment(id, comment).subscribe(data => {
-  //     this.getAllBlogs(); // Refresh all blogs to reflect the new comment
-  //     const index = this.newComment.indexOf(id); // Get the index of the blog id to remove from array
-  //     this.newComment.splice(index, 1); // Remove id from the array
-  //     this.enableCommentForm(); // Re-enable the form
-  //     this.commentForm.reset(); // Reset the comment form
-  //     this.processing = false; // Unlock buttons on comment form
-  //     if (this.enabledComments.indexOf(id) < 0) this.expand(id); // Expand comments for user on comment submission
-  //   });
 
   ngOnInit() {
     this.authService.getProfile().subscribe(profile => {

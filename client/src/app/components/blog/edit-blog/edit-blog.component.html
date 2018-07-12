@@ -35,6 +35,7 @@
               </label>
               <textarea rows = '10' name="body" class="form-control" id="body" aria-describedby="bodyHelp" formControlName="body" [(ngModel)]="blog.body" [ngClass] = "{ 'is-valid': form.controls['body'].valid,'is-invalid': form.controls['body'].errors && form.controls['body'].dirty }" >
               </textarea>
+              <app-text-editor [value]='defaultBodyValue' [elementId]="'bodytwin'" (EditorKeyup)= 'onBodyTextEditorKeyUp($event)' ></app-text-editor>
             </div>
           <div id="bodyHelp" class="form-text text-danger">
             <small *ngIf="form.controls['body'].errors?.required && form.controls['body'].dirty">

@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/rprajapatii/myBlog#readme",
   "dependencies": {
+    "@tinymce/tinymce-angular": "^2.0.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",

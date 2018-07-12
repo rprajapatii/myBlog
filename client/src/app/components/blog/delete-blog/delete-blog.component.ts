@@ -41,7 +41,7 @@ export class DeleteBlogComponent implements OnInit {
 
   ngOnInit() {
     this.currentUrl = this.activatedRoute.snapshot.params;
-    console.log(this.currentUrl.id);
+    // console.log(this.currentUrl.id);
   }
 
 }
