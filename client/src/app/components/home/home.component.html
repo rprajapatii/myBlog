@@ -1,1 +1,16 @@
-<h1 class="text-center"> Home page </h1>
+<div class='wrap'>
+  <div class='content'>
+    <h2 class="sub-section">
+      Start writing your stories. Read what others say about the world.
+    </h2>
+    <div class="row d-flex justify-content-center">
+      <button type="button" class="btn btn-outline-success mr-2 mb-2" *ngIf="!authService.loggedIn()" >
+          <a routerLink="/login" >Sign In</a>
+      </button>
+
+      <button type="button" class="btn btn-outline-success mr-2 mb-2" *ngIf="!authService.loggedIn()" >
+          <a routerLink="/register">Register</a>
+      </button>
+    </div>
+  </div>
+</div>

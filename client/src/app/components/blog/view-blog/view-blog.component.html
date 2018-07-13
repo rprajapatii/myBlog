@@ -1,10 +1,10 @@
 <div class="container">
   <!-- alert block starts -->
-    <div class="row" *ngIf = 'message && newBlog'>
+    <!-- <div class="row" *ngIf = 'message'>
       <div [ngClass] = "messageClass">
         {{ message }}
       </div>
-    </div>
+    </div> -->
   <!-- alert block ends -->
     <div>
         <div class="row">
@@ -24,11 +24,7 @@
                 <button type="button" class="btn btn-outline-secondary mr-2 mb-2"[routerLink]="['/edit-blog/', blog._id]" *ngIf = "username === blog.createdBy">
                     <i fa [name]="'edit'" [pull]="'left'"></i>Edit
                 </button>
-                <!-- <button type="button" class="btn btn-outline-secondary mr-2 mb-2" [routerLink]="['/delete-blog/', blog._id]" *ngIf="username === blog.createdBy">
-                    <i fa [name]="'trash'" [pull]="'left'"></i>
-                    Delete</button> -->
 
-              <!-- Likes Dropdown  -->
 
               <div class="dropdown" *ngIf='username !== blog.createdBy'>
                   <button type="button" class="btn dropbtn btn-outline-secondary mr-2 mb-2" [disabled]="blog.likedBy.indexOf(username) > -1" (click) = 'likeBlog(blog._id)' >

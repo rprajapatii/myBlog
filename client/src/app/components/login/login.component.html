@@ -1,6 +1,8 @@
+<div class="container">
 <div [ngClass] = 'messageClass' role="alert">
   {{ message }}
 </div>
+
 
 <form class="loginForm" [formGroup]="loginForm" (submit)="onLoginSubmit()">
   <div class="form-group">
@@ -42,3 +44,4 @@
   </button>
 </form>
 
+</div>

@@ -51,7 +51,6 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
   ngOnChanges() {
     setTimeout(() => {
       if (!isNullOrUndefined(this.editor) && this.value !== '' && !this.didSetValue) {
-        console.log(this.value);
         this.didSetValue = true;
         this.editor.setContent(this.value);
       }

@@ -21,8 +21,6 @@ export class BlogComponent implements OnInit {
   processing = false;
   username: string;
   allBlogs;
-  newComment = [];
-  enabledComments = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -107,8 +105,6 @@ export class BlogComponent implements OnInit {
     this.processing = true;
     this.disableForm();
 
-    console.log('value of body', this.form.controls['body'].value);
-
     const blog = {
       title: this.form.controls['title'].value,
       body: this.form.controls['body'].value,
@@ -142,66 +138,6 @@ export class BlogComponent implements OnInit {
       this.allBlogs = data.blogs;
       // console.log(data);
     });
-  }
-
-  likeBlog(id) {
-    this.blogService.likeBlog(id).subscribe(data => {
-      this.getAllBlogs();
-    });
-  }
-
-  dislikeBlog(id) {
-    this.blogService.dislikeBlog(id).subscribe(data => {
-      this.getAllBlogs();
-    });
-  }
-
-  disableCommentForm() {
-    this.commentForm.controls['comment'].disable();
-  }
-
-  enableCommentForm() {
-    this.commentForm.controls['comment'].enable();
-  }
-
-  draftComment(id) {
-    this.commentForm.reset();
-    this.newComment = [];
-    this.newComment.push(id);
-  }
-
-  oncommentSubmit(id) {
-    this.processing = true;
-    const comment = this.commentForm.get('comment').value;
-    this.blogService.commentBlog(id, comment).subscribe(data => {
-      console.log( 'data from commitSubmit =', data );
-      this.getAllBlogs();
-      const index = this.newComment.indexOf(id);
-      console.log('index=', this.newComment.indexOf(id));
-      this.newComment.splice(index, 1);
-      this.commentForm.reset();
-      this.processing = false;
-      if (this.enabledComments.indexOf(id) < 0) {
-        this.onShowCommentClick(id);
-      }
-    });
-  }
-
-  cancelCommit(id) {
-    const index = this.newComment.indexOf(id);
-    this.newComment.splice(index, 1);
-    this.commentForm.reset();
-    this.enableCommentForm();
-    this.processing = false;
-  }
-
-  onShowCommentClick(id) {
-    this.enabledComments.push(id);
-  }
-
-  onHideCommentClick(id) {
-    const index = this.enabledComments.indexOf(id);
-    this.enabledComments.splice(index, 1);
   }
 
   ngOnInit() {

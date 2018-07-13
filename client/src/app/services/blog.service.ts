@@ -42,6 +42,12 @@ export class BlogService {
     .pipe( map(res => res.json() ));
   }
 
+  viewBlog(id) {
+    this.createAuthHeaders();
+    return this.http.get(this.domain + '/blogs/viewBlog/' + id, this.options)
+    .pipe( map(res => res.json() ));
+  }
+
   updateBlog(blog) {
     this.createAuthHeaders();
     // console.log('inside authBlog service');
@@ -58,7 +64,6 @@ export class BlogService {
     const blogData = { id: id };
     return this.http.put(this.domain + '/blogs/likeBlog' , blogData , this.options)
     .pipe(  map(res => {
-      console.log(res.json());
       res.json();
     }));
   }
@@ -67,10 +72,15 @@ export class BlogService {
     const blogData = { id: id };
     return this.http.put(this.domain + '/blogs/dislikeBlog' , blogData , this.options)
     .pipe(  map(res => {
-      console.log(res.json());
       res.json();
     }));
   }
+
+  updateView(id) {
+    return this.http.get(this.domain + '/blogs/likeBlog', this.options)
+    .pipe(map(res => { res.json(); }));
+  }
+
 
   commentBlog(id, comment) {
     this.createAuthHeaders();

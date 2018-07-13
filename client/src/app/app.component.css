@@ -1,12 +1,3 @@
-:host /deep/ .sub-section{
-  margin-bottom: 1rem;
-}
-
-:host /deep/ textarea#body{
-  display: none;
-}
 
 
-body{
-  background: red;
-}
+
