@@ -62,6 +62,23 @@
             </div>
           </div>  <!-- close form group -->
 
+          <div class="form-group">
+              <div class="custom-form-group clearfix">
+                  <label class="form-label" for="category">
+                    <span class="input-label-content"> Select Category </span>
+                  </label>
+                  <select class="form-control" formControlName = "category" id='category'  
+                  [(ngModel)] = "catselected" [ngClass] = "{ 'is-valid': form.controls['category'].valid, 'is-invalid': form.controls['category'].errors && form.controls['category'].dirty }" >
+                      <option *ngFor="let category of categories" [value]="category.Id"> {{category.name}}</option>
+                  </select>
+              <div id="categoryHelp" class="form-text text-danger">
+                <small *ngIf="form.controls['category'].errors?.required && form.controls['category'].dirty">
+                  Category is required field.
+                </small>
+              </div>
+              </div>
+            </div>  <!-- close form group -->
+
           <button class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'processing' (click) = 'onBackClick()'>Back</button>
           <button type="submit" class="btn btn-outline-secondary mr-2 mb-2" [disabled] = '!form.valid ||processing'>Submit</button>
         </form>

@@ -13,7 +13,8 @@ import { BlogService } from './../../services/blog.service';
 export class BlogComponent implements OnInit {
   form: FormGroup;
   commentForm: FormGroup;
-
+  categories = [];
+  catselected: number;
   message;
   messageClass: string;
   newBlog = false;
@@ -28,7 +29,6 @@ export class BlogComponent implements OnInit {
     private blogService: BlogService
   ) {
     this.createForm();
-    this.createCommentForm();
    }
 
   createForm() {
@@ -46,18 +46,12 @@ export class BlogComponent implements OnInit {
                 Validators.maxLength(5000)
         ])
       ],
+      category: ['', Validators.compose([
+                 Validators.required
+      ])
 
-    });
-  }
+      ]
 
-  createCommentForm() {
-    this.commentForm = this.formBuilder.group({
-      comment: ['',   Validators.compose([
-                  Validators.required,
-                  Validators.minLength(1),
-                  Validators.maxLength(200)
-                ])
-              ]
     });
   }
 
@@ -90,11 +84,13 @@ export class BlogComponent implements OnInit {
   enableForm() {
     this.form.controls['title'].enable();
     this.form.controls['body'].enable();
+    this.form.controls['category'].enable();
   }
 
   disableForm() {
     this.form.controls['title'].disable();
     this.form.controls['body'].disable();
+    this.form.controls['category'].enable();
   }
 
   onBodyTextEditorKeyUp(textValue) {
@@ -108,8 +104,10 @@ export class BlogComponent implements OnInit {
     const blog = {
       title: this.form.controls['title'].value,
       body: this.form.controls['body'].value,
-      createdBy: this.username
+      createdBy: this.username,
+      category: this.form.controls['category'].value
     };
+    console.log('category value =', this.form.controls['category'].value);
 
     this.blogService.newBlog(blog).subscribe(data => {
      if (!data.success) {
@@ -136,12 +134,20 @@ export class BlogComponent implements OnInit {
   getAllBlogs() {
     this.blogService.getAllBlogs().subscribe(data => {
       this.allBlogs = data.blogs;
-      // console.log(data);
     });
   }
 
   ngOnInit() {
+
+    this.categories = [
+      { Id : 1, name : 'one'},
+      { Id : 2, name : 'two' },
+      { Id : 3, name : 'three' }
+    ];
+
+    this.catselected = 3;
     this.authService.getProfile().subscribe(profile => {
+      console.log(profile);
       this.username = profile.user.username;
     });
     this.getAllBlogs();
