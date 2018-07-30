@@ -4,12 +4,12 @@
       Start writing your stories. Read what others say about the world.
     </h2>
     <div class="row d-flex justify-content-center">
-      <button type="button" class="btn btn-outline-success mr-2 mb-2" *ngIf="!authService.loggedIn()" >
-          <a routerLink="/login" >Sign In</a>
+      <button type="button" class="btn btn-dark mr-2 mb-2" routerLink="/login" *ngIf="!authService.loggedIn()" >
+        Sign In
       </button>
 
-      <button type="button" class="btn btn-outline-success mr-2 mb-2" *ngIf="!authService.loggedIn()" >
-          <a routerLink="/register">Register</a>
+      <button type="button" class="btn btn-outline-dark mr-2 mb-2" routerLink="/register" *ngIf="!authService.loggedIn()" >
+        Register
       </button>
     </div>
   </div>

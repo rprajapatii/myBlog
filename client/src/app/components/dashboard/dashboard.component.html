@@ -1,1 +1,39 @@
-<h1 class="text-center"> Dashboard </h1>
+<div class="container">
+  <h3>Your Blogs</h3>
+  <!-- buttons block starts -->
+  <!-- <div class="row sub-section">
+      <div class="col-md-12">
+        <button type="button" class="btn btn-outline-secondary mr-2 mb-2" *ngIf='!newBlog' (click) = 'newBlogForm()' >Create your Blog</button>
+
+        <button type="button" class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'loadingBlogs' *ngIf='!newBlog' (click)='reloadBlogs()' >
+            <i fa [name]="'refresh'" [pull]="'left'"></i>
+          Refresh
+        </button>
+      </div>
+    </div> -->
+  <!-- button block ends -->
+<div class="col-md-12" >
+
+  <div *ngIf = "userBlogs?.length < 1" class="mt-2 text-center">
+    <table style="min-height: 50vh; width: 100%">
+        <tbody>
+            <tr>
+              <td class="align-middle">
+                <h4> You have no blogs of your own. </h4>
+                <p> Click create blog button at top of the page and share your words to other readers.  </p>
+              </td>
+              </tr>
+        </tbody>
+    </table>
+  </div>
+
+  <div class="" *ngFor = "let blog of userBlogs">
+    <a class="notalink" [routerLink]="['/view-blog/', blog._id]">
+      <h4 class="text-dark"> {{ blog.title }} </h4>
+      <p class="mb-1 text-muted">{{ blog.createdAt | date:'short' }}
+        <a href="#">{{ blog.createdBy }}</a></p>
+        <div class="post-content" [innerHTML]="blog.body"></div>
+    </a>
+  </div> <!-- close of blog-post -->
+</div> <!-- close of row -->
+</div>

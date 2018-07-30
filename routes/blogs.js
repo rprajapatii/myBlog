@@ -57,7 +57,7 @@ module.exports = (router) => {
                 if(!blogs){
                     res.json({ success: false, message: 'There is no Blog.' })
                 } else {
-                    res.json({ success: true, blogs: blogs })
+                    res.json({ success: true, blogs: blogs });
                 }
             }
         }).sort({ '_id': -1 })
@@ -80,7 +80,6 @@ module.exports = (router) => {
 
     router.put('/updateBlog',(req, res) => {
         // res.send(req.body._id);
-        console.log('req.body._id = ',req.body._id);
         if(!req.body._id){
             res.json({ success: false, message: 'No blog id is provided.' })
         } else {
@@ -148,6 +147,24 @@ module.exports = (router) => {
                                 }
                             }
                         })
+                    }
+                }
+            });
+        }
+    });
+
+    router.get('/viewBlog/:id',(req, res) => {
+        if( !req.params.id ) {
+            res.json({ success: false, message: 'Blog id is not provided.' })
+        } else {
+            Blog.findOne({_id: req.params.id},(err,blog) => {
+                if(err) {
+                    res.json({ success: false, message: 'Blog id is not valid.' })
+                } else {
+                    if (!blog) {
+                        res.json({ success: false, message: 'Blog is not found.' })
+                    } else {
+                        res.json({ success: true, blog: blog })
                     }
                 }
             });
@@ -245,9 +262,11 @@ module.exports = (router) => {
                                                blog.dislikes++;
                                                blog.dislikedBy.push(user.username);
                                                blog.save((err) => {
-                                                    if(err){
+                                                  
+                                                    if(err){ 
                                                         res.json({ success: false, message: 'Something went wrong.' })
                                                     }else{
+                                                       
                                                         res.json({ success: true, message: 'Blog disliked!' })
                                                     }
                                                 })
@@ -315,7 +334,30 @@ module.exports = (router) => {
             }
             
         }
-    })
+    });
+
+    router.get('/getUserBlogs',(req, res) => {
+        User.findOne({ _id: res.decoded.userId },(err, user) => {
+            if(err) {
+                res.json({ success: false, message: 'User id is not valid.' })
+            }else {
+                Blog.find({},(err, blogs) => {
+                    if(err) {
+                        res.json({ success: false, message: err })
+                    } else {
+                        if(!blogs){
+                            res.json({ success: false, message: 'There is no Blog.' })
+                        } else {
+                            var result = blogs.filter(obj => {
+                                return obj.createdBy === user.username;
+                              })
+                            res.json({ success: true, blogs: result })
+                        }
+                    }
+                }).sort({ '_id': -1 })
+            }
+        });
+    });
 
     return router;
 }

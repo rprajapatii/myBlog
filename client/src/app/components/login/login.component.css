@@ -1,4 +1,12 @@
-.loginForm{
+.container-480{
 	max-width: 480px;
 	margin: 0 auto;
+}
+
+.loginForm{
+  background: #fff;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border-radius: 4px;
+  box-shadow: 2px 2px 25px rgba(0,0,0,0.2);
 }

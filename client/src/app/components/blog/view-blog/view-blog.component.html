@@ -7,21 +7,20 @@
     </div> -->
   <!-- alert block ends -->
     <div>
-        <div class="row">
+        <div class="row" >
           <div class="blog-post">
-            <h2 class="blog-post-title"> {{ blog.title }} </h2>
+            <h3 class="blog-post-title"> {{ blog.title }} </h3>
             <p class="blog-post-meta">{{ blog.createdAt | date:'short' }}
-              <a href="#">{{ blog.createdBy }}</a></p>
+              <a  (click)="goToPublicProfile(blog.createdBy)" >{{ blog.createdBy }}</a></p>
               <div class="post-content" [innerHTML]="blog.body"></div>
-            <!-- <p>{{ blog.body }}</p> -->
             <div class="row sub-section">
-                <div *ngIf="username === blog.createdBy">
+                <div *ngIf="username === blog?.createdBy">
                     <strong>Likes: </strong>{{ blog.likes }}
                     <br />
                     <strong>Dislikes: </strong>{{ blog.dislikes }}
                 </div>
 
-                <button type="button" class="btn btn-outline-secondary mr-2 mb-2"[routerLink]="['/edit-blog/', blog._id]" *ngIf = "username === blog.createdBy">
+                <button type="button" class="btn btn-outline-secondary mr-2 mb-2"[routerLink]="['/edit-blog/', blog?._id]" *ngIf="username === blog?.createdBy">
                     <i fa [name]="'edit'" [pull]="'left'"></i>Edit
                 </button>
 

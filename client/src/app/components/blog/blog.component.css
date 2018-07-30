@@ -151,7 +151,7 @@
 .post-content{
   overflow: hidden;
   text-overflow: ellipsis;
-  height: 300px;
+  /* height: 300px; */
 }
 
 .post-content img:first-of-type{

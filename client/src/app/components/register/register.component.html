@@ -1,8 +1,11 @@
-<div [ngClass] = 'messageClass' role="alert">
+<div class="wrap">
+<div [ngClass] = 'messageClass' class="container-480" role="alert">
   {{ message }}
 </div>
 
-<form class="regForm" [formGroup]="regForm" (submit)="onRegSubmit()">
+<form class="regForm container-480" [formGroup]="regForm" (submit)="onRegSubmit()">
+<h3>{{title}}</h3>
+
   <div class="form-group">
     <div class="custom-form-group clearfix">
       <label class="form-label" for="email">
@@ -39,7 +42,7 @@
         'is-valid': !regForm.controls['username'].errors || usernameValid }" (blur) = "checkUsername()" />
     </div>
     <div id="usernameHelp" class="form-text text-danger">
-      <small *ngIf="regForm.controls['username'].errors?.required && regForm.controls['username'].dirty"> 
+      <small *ngIf="regForm.controls['username'].errors?.required && regForm.controls['username'].dirty">
         Username is required.
       </small>
       <small *ngIf="(regForm.controls['username'].errors?.minlength || regForm.controls['username'].errors?.maxlength) && regForm.controls['username'].dirty">
@@ -99,3 +102,4 @@
     Submit
   </button>
 </form>
+</div>

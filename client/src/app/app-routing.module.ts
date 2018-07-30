@@ -19,11 +19,12 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterComponent, canActivate: [NotAuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'public-profile/:username', component: PublicProfileComponent, canActivate: [AuthGuard] },
   { path: 'blog', component: BlogComponent, canActivate: [AuthGuard]  },
   { path: 'view-blog/:id', component: ViewBlogComponent, canActivate: [AuthGuard]  },
   { path: 'edit-blog/:id', component: EditBlogComponent, canActivate: [AuthGuard]  },
   { path: 'delete-blog/:id', component: DeleteBlogComponent, canActivate: [AuthGuard] },
-  { path: 'user/:username', component: PublicProfileComponent, canActivate: [AuthGuard] },
+  // { path: 'user/:username', component: PublicProfileComponent, canActivate: [AuthGuard] },
   { path: '**', component: HomeComponent }
 ];
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { BlogService } from '../../../services/blog.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router} from '@angular/router';
 // import { map } from 'rxjs/operators';
 
 
@@ -31,6 +31,7 @@ export class ViewBlogComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private blogService: BlogService,
               private authService: AuthService,
+              private router: Router,
               private activatedRoute: ActivatedRoute,
               ) {
                 this.createCommentForm();
@@ -82,10 +83,8 @@ export class ViewBlogComponent implements OnInit {
     this.processing = true;
     const comment = this.commentForm.get('comment').value;
     this.blogService.commentBlog(id, comment).subscribe(data => {
-      console.log( 'data from commitSubmit =', data );
       this.getBlog();
       const index = this.newComment.indexOf(id);
-      console.log('index=', this.newComment.indexOf(id));
       this.newComment.splice(index, 1);
       this.commentForm.reset();
       this.processing = false;
@@ -113,8 +112,11 @@ export class ViewBlogComponent implements OnInit {
   }
 
   getBlog() {
+    // console.log('inside getblog');
     this.currentUrl = this.activatedRoute.snapshot.params;
     this.blogService.viewBlog(this.currentUrl.id).subscribe( data => {
+       console.log('data from viewblog =', data);
+
      if (!data.success) {
       this.messageClass = 'alert alert-danger';
       this.message = 'Blog not found';
@@ -124,6 +126,9 @@ export class ViewBlogComponent implements OnInit {
     });
   }
 
+  goToPublicProfile(username) {
+      this.router.navigate(['/public-profile/' + username]);
+  }
 
   ngOnInit() {
     this.getBlog();

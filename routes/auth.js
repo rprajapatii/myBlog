@@ -42,7 +42,7 @@ module.exports = (router) => {
                 }
               }
             } else {
-							res.json({ success: true, message: 'Acount registered!' });
+							res.json({ success: true, message: 'Account registered! You can Login with your account to read or write blogs.' });
             }
 					});
 				}
@@ -148,6 +148,7 @@ module.exports = (router) => {
 	});
 	
 	router.get('/publicProfile/:username', (req,res) => {
+		console.log('test from public profile');
 		if(!req.params.username) {
 			res.json({ success: false, message: 'Username is not provided.' })
 		} else {

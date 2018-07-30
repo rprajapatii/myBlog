@@ -50,7 +50,6 @@ export class BlogService {
 
   updateBlog(blog) {
     this.createAuthHeaders();
-    // console.log('inside authBlog service');
     return this.http.put(this.domain + '/blogs/updateBlog', blog , this.options)
     .pipe( map(res => res.json() ));
   }
@@ -90,6 +89,12 @@ export class BlogService {
     };
     return this.http.put(this.domain + '/blogs/comment', blogData, this.options)
     .pipe( map(res => res.json() ));
+  }
+
+  getUserBlogs() {
+    this.createAuthHeaders();
+    return this.http.get(this.domain + '/blogs/getUserBlogs', this.options)
+    .pipe( map(res =>  res.json() ));
   }
 
 }

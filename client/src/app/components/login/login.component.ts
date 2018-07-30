@@ -13,6 +13,7 @@ import { AuthGuard } from '../../guards/auth.guard';
 
 export class LoginComponent implements OnInit {
 
+  title = 'Login';
   loginForm: FormGroup;
   message: string;
   messageClass: string;

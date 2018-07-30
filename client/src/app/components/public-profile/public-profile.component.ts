@@ -15,7 +15,9 @@ export class PublicProfileComponent implements OnInit {
   email;
 
   constructor( private authService: AuthService,
-               private activatedRoute: ActivatedRoute ) { }
+               private activatedRoute: ActivatedRoute ) {
+                 console.log('here');
+                }
 
   ngOnInit() {
     this.currentUrl = this.activatedRoute.snapshot.params;

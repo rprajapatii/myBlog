@@ -72,6 +72,7 @@ let titleLengthChecker = (title) => {
       message: 'Comments may not exceed 200 characters.'
     }
   ];
+
   
 const blogSchema = new Schema({
     title: {
@@ -81,7 +82,9 @@ const blogSchema = new Schema({
     body: {
         type: String, required: true, validate: bodyValidators
     },
-
+    category: {
+        type: String, required: false
+    },
     createdBy: {
         type: String
     },

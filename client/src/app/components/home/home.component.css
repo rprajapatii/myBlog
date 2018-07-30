@@ -1,10 +1,5 @@
 .wrap {
-  position: relative;
-  width: 100%;
-  margin-top: -1rem;
-  height: calc(100vh - 104px);
-  background-color: rgba(40,167,69, 1);
-   background-image: url(../../../assets/images/scatter_paper.jpeg);
+   /* background-image: url(../../../assets/images/scatter_paper.jpeg); */
   background-size: cover;
   background-blend-mode: multiply;
 }
@@ -17,26 +12,6 @@
   transform: translate(-50%, -50%);
 }
 
-.content, .btn a{
-  color: #fff;
+.content {
   text-align: center;
-}
-
-.btn{
-  border-color: #fff;
-
-}
-
-.btn a{
-  text-decoration: none;
-}
-
-.btn a:hover{
-  color: #28a745;
-}
-
-.btn-outline-success:hover {
-  background-color: #fff;
-  border-color: #fff;
-  color: #28a745;
 }

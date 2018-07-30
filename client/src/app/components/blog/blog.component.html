@@ -9,8 +9,8 @@
 
 <!-- buttons block starts -->
   <div class="row sub-section">
-    <div class="col-md-12">
-      <button type="button" class="btn btn-outline-secondary mr-2 mb-2" *ngIf='!newBlog' (click) = 'newBlogForm()' >Create your Blog</button>
+    <div class="col-md-12 d-flex justify-content-end">
+      <button type="button" class="btn btn-dark mr-2 mb-2" *ngIf='!newBlog' (click) = 'newBlogForm()' >Create your Blog</button>
 
       <button type="button" class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'loadingBlogs' *ngIf='!newBlog' (click)='reloadBlogs()' >
           <i fa [name]="'refresh'" [pull]="'left'"></i>
