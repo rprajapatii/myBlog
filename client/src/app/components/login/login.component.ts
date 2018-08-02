@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   processing = false;
   inputClass: string;
   previousUrl;
+  ShowCategory: Boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit {
 
   }
 
+
   onLoginSubmit() {
     const user = {
       username: this.loginForm.get('username').value,
@@ -63,6 +65,7 @@ export class LoginComponent implements OnInit {
         this.message = data.message;
         this.authService.storeUserData(data.token, data.user);
         setTimeout(() => {
+        this.authService.emitConfig(1);
           if (this.previousUrl) {
             this.router.navigate([this.previousUrl]);
           } else {

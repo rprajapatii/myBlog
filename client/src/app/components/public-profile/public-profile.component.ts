@@ -16,7 +16,6 @@ export class PublicProfileComponent implements OnInit {
 
   constructor( private authService: AuthService,
                private activatedRoute: ActivatedRoute ) {
-                 console.log('here');
                 }
 
   ngOnInit() {

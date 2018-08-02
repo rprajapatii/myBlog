@@ -11,7 +11,7 @@
         <div class="form-group">
           <div class="custom-form-group clearfix">
               <label class="form-label" for="title">
-                <span class="input-label-content"> Blog Title </span>
+                <span class="input-label-content"> Update Blog Title </span>
               </label>
               <input type="text" name="title" class="form-control" id="title" aria-describedby="titleHelp" formControlName="title" [(ngModel)]= "blog.title" [ngClass] = "{ 'is-valid': form.controls['title'].valid,'is-invalid': form.controls['title'].errors && form.controls['title'].dirty }" />
             </div>
@@ -31,7 +31,7 @@
         <div class="form-group">
           <div class="custom-form-group clearfix">
               <label class="form-label" for="body">
-                <span class="input-label-content"> Write your Blog </span>
+                <span class="input-label-content"> Update your Blog </span>
               </label>
               <textarea rows = '10' name="body" class="form-control" id="body" aria-describedby="bodyHelp" formControlName="body" [(ngModel)]="blog.body" [ngClass] = "{ 'is-valid': form.controls['body'].valid,'is-invalid': form.controls['body'].errors && form.controls['body'].dirty }" >
               </textarea>
@@ -46,6 +46,24 @@
             </small>
           </div>
         </div>  <!-- close form group -->
+
+        <div class="form-group">
+            <div class="custom-form-group clearfix">
+                <label class="form-label" for="category">
+                  <span class="input-label-content"> Change Category </span>
+                </label>
+                <select class="form-control" formControlName = "category" id='category'
+                [ngClass] = "{ 'is-valid': form.controls['category'].valid, 'is-invalid': form.controls['category'].errors && form.controls['category'].dirty }" >
+                  <option value="" class = 'text-muted' disabled selected>Select one of the categories</option>
+                  <option *ngFor="let category of categories" [value]="category.name"> {{category.name}}</option>
+                </select>
+            <div id="categoryHelp" class="form-text text-danger">
+              <small *ngIf="form.controls['category'].errors?.required && form.controls['category'].dirty">
+                Category is required field.
+              </small>
+            </div>
+            </div>
+          </div>  <!-- close form group -->
 
         <button class="btn btn-outline-secondary mr-2 mb-2" [disabled] = 'processing' (click) = 'onBackClick()'>Back</button>
 

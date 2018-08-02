@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../../services/auth.service';
 import { BlogService } from './../../services/blog.service';
+import { CategoryService } from './../../services/category.service';
 
 @Component({
   selector: 'app-blog',
@@ -13,8 +15,6 @@ import { BlogService } from './../../services/blog.service';
 export class BlogComponent implements OnInit {
   form: FormGroup;
   commentForm: FormGroup;
-  categories = [];
-  catselected: number;
   message;
   messageClass: string;
   newBlog = false;
@@ -22,11 +22,14 @@ export class BlogComponent implements OnInit {
   processing = false;
   username: string;
   allBlogs;
+  categories = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private categoryService: CategoryService,
+    private router: Router
   ) {
     this.createForm();
    }
@@ -66,6 +69,7 @@ export class BlogComponent implements OnInit {
 
   newBlogForm() {
     this.newBlog = true;
+    this.getAllCategories();
   }
 
   reloadBlogs() {
@@ -107,9 +111,9 @@ export class BlogComponent implements OnInit {
       createdBy: this.username,
       category: this.form.controls['category'].value
     };
-    console.log('category value =', this.form.controls['category'].value);
 
     this.blogService.newBlog(blog).subscribe(data => {
+      console.log('data b4 save', data);
      if (!data.success) {
         this.messageClass = 'alert alert-danger';
         this.message = data.message;
@@ -137,17 +141,19 @@ export class BlogComponent implements OnInit {
     });
   }
 
+  getAllCategories() {
+    this.categoryService.getAllCategories().subscribe(data => {
+      this.categories = data.categories;
+      console.log(this.categories);
+    });
+  }
+
+  goToPublicProfile(username) {
+    this.router.navigate(['/public-profile/' + username]);
+  }
+
   ngOnInit() {
-
-    this.categories = [
-      { Id : 1, name : 'one'},
-      { Id : 2, name : 'two' },
-      { Id : 3, name : 'three' }
-    ];
-
-    this.catselected = 3;
     this.authService.getProfile().subscribe(profile => {
-      console.log(profile);
       this.username = profile.user.username;
     });
     this.getAllBlogs();

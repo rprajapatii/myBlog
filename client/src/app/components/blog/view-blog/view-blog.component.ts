@@ -116,7 +116,6 @@ export class ViewBlogComponent implements OnInit {
     this.currentUrl = this.activatedRoute.snapshot.params;
     this.blogService.viewBlog(this.currentUrl.id).subscribe( data => {
        console.log('data from viewblog =', data);
-
      if (!data.success) {
       this.messageClass = 'alert alert-danger';
       this.message = 'Blog not found';

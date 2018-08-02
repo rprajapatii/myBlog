@@ -30,9 +30,8 @@
   <div class="" *ngFor = "let blog of userBlogs">
     <a class="notalink" [routerLink]="['/view-blog/', blog._id]">
       <h4 class="text-dark"> {{ blog.title }} </h4>
+      <div class="post-content" [innerHTML]="blog.body | slice:0:150"></div>
       <p class="mb-1 text-muted">{{ blog.createdAt | date:'short' }}
-        <a href="#">{{ blog.createdBy }}</a></p>
-        <div class="post-content" [innerHTML]="blog.body"></div>
     </a>
   </div> <!-- close of blog-post -->
 </div> <!-- close of row -->

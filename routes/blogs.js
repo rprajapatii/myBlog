@@ -13,12 +13,18 @@ module.exports = (router) => {
             }else{
                     if(!req.body.createdBy) {
                         res.json({ success: false, message: "You must provied the name of the writer." });
-                    } else {
-                    let blog = new Blog({
-                        title: req.body.title,
-                        body: req.body.body,
-                        createdBy: req.body.createdBy 
-                    });
+                    }else{
+                        if(!req.body.category){
+                            res.json({
+                                success: false, message: "Category is a required field."
+                            })
+                        } else {
+                            let blog = new Blog({
+                                title: req.body.title,
+                                body: req.body.body,
+                                createdBy: req.body.createdBy,
+                                category: req.body.category
+                            });
                     blog.save((err) => {
                         if(err){
                             if(err.errors){
@@ -43,6 +49,7 @@ module.exports = (router) => {
                         }
                     });
                 }
+            }
             }
         
         }
@@ -79,7 +86,6 @@ module.exports = (router) => {
     });
 
     router.put('/updateBlog',(req, res) => {
-        // res.send(req.body._id);
         if(!req.body._id){
             res.json({ success: false, message: 'No blog id is provided.' })
         } else {
@@ -99,6 +105,7 @@ module.exports = (router) => {
                                 } else {
                                     blog.title = req.body.title;
                                     blog.body = req.body.body;
+                                    blog.category = req.body.category;
                                     blog.save((err) => {
                                         if(err) {
                                             res.json({ success: false, message: err })

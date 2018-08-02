@@ -1,9 +1,9 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../../services/blog.service';
+import { CategoryService } from '../../../services/category.service';
 
 @Component({
   selector: 'app-edit-blog',
@@ -20,11 +20,14 @@ export class EditBlogComponent implements OnInit {
   currentUrl;
   loading = true;
   defaultBodyValue;
+  categories = [];
+  defaultCategory;
 
   constructor( private formBuilder: FormBuilder,
                private location: Location,
                private blogService: BlogService,
                private activatedRoute: ActivatedRoute,
+               private categoryService: CategoryService,
                private router: Router
             ) {
               this.updateForm();
@@ -33,11 +36,13 @@ export class EditBlogComponent implements OnInit {
   enableForm() {
     this.form.controls['title'].enable();
     this.form.controls['body'].enable();
+    this.form.controls['category'].enable();
   }
 
   disableForm() {
     this.form.controls['title'].disable();
     this.form.controls['body'].disable();
+    this.form.controls['category'].disable();
   }
 
   updateForm() {
@@ -55,7 +60,8 @@ export class EditBlogComponent implements OnInit {
                 Validators.maxLength(5000)
         ])
       ],
-
+      category: ['', Validators.required
+      ]
     });
   }
 
@@ -74,8 +80,9 @@ export class EditBlogComponent implements OnInit {
   }
 
   editBlogSubmit() {
+    this.blog.category = this.form.controls['category'].value;
+
     this.blogService.updateBlog(this.blog).subscribe( data => {
-      // console.log('data = ', data);
     this.processing = true;
     this.disableForm();
 
@@ -104,9 +111,14 @@ export class EditBlogComponent implements OnInit {
   onDeleteClick() {
   }
 
+  getAllCategories() {
+    this.categoryService.getAllCategories().subscribe(data => {
+      this.categories = data.categories;
+    });
+  }
+
   ngOnInit() {
     this.currentUrl = this.activatedRoute.snapshot.params;
-    // this.currentUrl = this.activatedRoute.snapshot.url;
     this.blogService.getSingleBlog(this.currentUrl.id).subscribe( data => {
      if (!data.success) {
       this.messageClass = 'alert alert-danger';
@@ -114,10 +126,13 @@ export class EditBlogComponent implements OnInit {
      } else {
       this.blog = data.blog;
       this.defaultBodyValue = this.blog.body;
+      this.defaultCategory = this.blog.category;
       this.loading = false;
+      this.form.controls['category'].patchValue(this.defaultCategory);
      }
 
     });
+    this.getAllCategories();
   }
 
 }

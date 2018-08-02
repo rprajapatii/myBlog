@@ -26,6 +26,7 @@ import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.c
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { EditorComponent } from './components/helpers/editor/editor.component';
 import { ViewBlogComponent } from './components/blog/view-blog/view-blog.component';
+import { CategoricalBlogComponent } from './components/categorical-blog/categorical-blog.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ViewBlogComponent } from './components/blog/view-blog/view-blog.compone
     DeleteBlogComponent,
     PublicProfileComponent,
     EditorComponent,
-    ViewBlogComponent
+    ViewBlogComponent,
+    CategoricalBlogComponent
   ],
   imports: [
     BrowserModule,

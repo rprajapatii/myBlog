@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const auth = require('./routes/auth')(router);
 const blogs = require('./routes/blogs')(router);
+const category = require('./routes/category')(router);
 const config = require('./config/database');
 const bodyParser = require('body-parser');
 
@@ -32,8 +33,8 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/client/dist/client'));
 app.use('/auth', auth);
-app.use('/blogs',blogs);
-
+app.use('/blogs', blogs);
+app.use('/category', category);
 
 app.get('*', function(req, res){
 	res.sendFile(path.join(__dirname + '/client/dist/client/index.html'));

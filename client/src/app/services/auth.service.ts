@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { map } from 'rxjs/operators';
 import { tokenNotExpired } from 'angular2-jwt';
+import { Subject } from 'rxjs';
 
 @Injectable()
 
@@ -12,7 +13,10 @@ export class AuthService {
 
   domain = 'http://localhost:8080';
 
-  constructor( private http: Http ) { }
+  public configObservable = new Subject<number>();
+
+  constructor( private http: Http,
+  ) { }
 
   createAuthHeaders() {
     this.loadToken();
@@ -42,6 +46,10 @@ export class AuthService {
   checkUsername(username) {
     return this.http.get(this.domain + '/auth/checkUsername/' + username)
      .pipe(map(res => res.json()));
+  }
+
+  emitConfig(val) {
+    this.configObservable.next(val);
   }
 
   loginUser(user) {
