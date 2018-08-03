@@ -47,6 +47,10 @@ export class NavBarComponent implements OnInit, OnChanges {
     });
   }
 
+  onEnter(searchText: string) {
+    this.router.navigate(['/search/' + searchText]);
+  }
+
   ngOnInit() {
   }
 

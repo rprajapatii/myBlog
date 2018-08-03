@@ -21,8 +21,8 @@ export class CategoricalBlogComponent implements OnInit {
   ) {}
 
   getCategoricalBlogs() {
-    this.currentUrl = this.activatedRoute.snapshot.paramMap.get('catName');
-    this.categoryService.getCategoricalBlogs(this.currentUrl)
+    this.currentUrl = this.activatedRoute.snapshot.paramMap;
+    this.categoryService.getCategoricalBlogs(this.currentUrl.get('catName'))
     .subscribe(data => {
       if (!data.success) {
         this.messageClass = 'alert alert-danger';

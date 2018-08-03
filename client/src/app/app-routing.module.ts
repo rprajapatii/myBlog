@@ -13,6 +13,8 @@ import { DeleteBlogComponent } from './components/blog/delete-blog/delete-blog.c
 import { PublicProfileComponent } from './components/public-profile/public-profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { NotAuthGuard } from './guards/notAuth.guard';
+import { SearchComponent } from './components/search/search.component';
+
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,6 +28,7 @@ const appRoutes: Routes = [
   { path: 'view-blog/:id', component: ViewBlogComponent, canActivate: [AuthGuard]  },
   { path: 'edit-blog/:id', component: EditBlogComponent, canActivate: [AuthGuard]  },
   { path: 'delete-blog/:id', component: DeleteBlogComponent, canActivate: [AuthGuard] },
+  { path: 'search/:searchText', component: SearchComponent, canActivate: [AuthGuard] },
   { path: '**', component: HomeComponent }
 ];
 

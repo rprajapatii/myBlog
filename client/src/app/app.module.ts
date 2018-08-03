@@ -27,6 +27,7 @@ import { PublicProfileComponent } from './components/public-profile/public-profi
 import { EditorComponent } from './components/helpers/editor/editor.component';
 import { ViewBlogComponent } from './components/blog/view-blog/view-blog.component';
 import { CategoricalBlogComponent } from './components/categorical-blog/categorical-blog.component';
+import { SearchComponent } from './components/search/search.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { CategoricalBlogComponent } from './components/categorical-blog/categori
     PublicProfileComponent,
     EditorComponent,
     ViewBlogComponent,
-    CategoricalBlogComponent
+    CategoricalBlogComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
