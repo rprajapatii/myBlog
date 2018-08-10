@@ -8,7 +8,9 @@ import { CategoryService } from '../../../services/category.service';
 @Component({
   selector: 'app-edit-blog',
   templateUrl: './edit-blog.component.html',
-  styleUrls: ['./edit-blog.component.css']
+  styleUrls: ['./edit-blog.component.css',
+  '../../../../../node_modules/font-awesome/css/font-awesome.css'
+]
 })
 export class EditBlogComponent implements OnInit {
   blog;

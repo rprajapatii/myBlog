@@ -12,6 +12,7 @@
       </div>
     </div> -->
   <!-- button block ends -->
+  <div class="row">
 <div class="col-md-12" >
 
   <div *ngIf = "userBlogs?.length < 1" class="mt-2 text-center">
@@ -20,19 +21,20 @@
             <tr>
               <td class="align-middle">
                 <h4> You have no blogs of your own. </h4>
-                <p> Click create blog button at top of the page and share your words to other readers.  </p>
+                <p> Click the blog button at navigation and click create blog button and share your words to other readers.  </p>
               </td>
               </tr>
         </tbody>
     </table>
   </div>
 
-  <div class="" *ngFor = "let blog of userBlogs">
+  <div class="" *ngFor = "let blog of userBlogs" class="sub-section">
     <a class="notalink" [routerLink]="['/view-blog/', blog._id]">
       <h4 class="text-dark"> {{ blog.title }} </h4>
-      <div class="post-content" [innerHTML]="blog.body | slice:0:150"></div>
+      <div class="post-content" [innerHTML]="(blog.body | slice:0:200) + '...'"></div>
       <p class="mb-1 text-muted">{{ blog.createdAt | date:'short' }}
     </a>
   </div> <!-- close of blog-post -->
 </div> <!-- close of row -->
+</div>
 </div>

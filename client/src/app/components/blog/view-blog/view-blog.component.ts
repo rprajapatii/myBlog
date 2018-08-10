@@ -9,9 +9,7 @@ import { ActivatedRoute , Router} from '@angular/router';
 @Component({
   selector: 'app-view-blog',
   templateUrl: './view-blog.component.html',
-  styleUrls: ['./view-blog.component.css',
-              '../../../../../node_modules/font-awesome/css/font-awesome.css'
-            ]
+  styleUrls: ['./view-blog.component.css']
 })
 
 export class ViewBlogComponent implements OnInit {

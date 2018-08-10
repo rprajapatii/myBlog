@@ -4,3 +4,42 @@
   z-index: 1;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
+
+.dropdown-toggle {
+  position: relative;
+}
+
+.dropdown-toggle i,
+.dropdown-toggle span{
+  cursor: pointer;
+}
+
+.dropdown-toggle::after{
+  display: none;
+}
+
+.dropdown-menu{
+  top: 10px !important;
+  box-sizing: border-box;
+  width: 390px !important;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.seenClass { background: #ddd;
+margin-bottom: 1px;}
+
+.dropdown-item{
+  white-space: normal !important;
+}
+
+.badge{
+  font-size: 10px;
+  border-radius: 50% 50%;
+  height: 20px;
+  width: 20px;
+  line-height: 15px;
+  position: absolute;
+  left: 10px;
+  top: -3px;
+}

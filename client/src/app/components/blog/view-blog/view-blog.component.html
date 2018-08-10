@@ -13,7 +13,7 @@
             <p class="blog-post-meta">{{ blog.createdAt | date:'short' }}
               <a  (click)="goToPublicProfile(blog.createdBy)" >{{ blog.createdBy }}</a></p>
               <div class="post-content" [innerHTML]="blog.body"></div>
-            <div class="row sub-section">
+            <div class="sub-section">
                 <div *ngIf="username === blog?.createdBy">
                     <strong>Likes: </strong>{{ blog.likes }}
                     <br />
@@ -31,7 +31,7 @@
                     Like:&nbsp;{{blog.likes}}
                   </button>
                   <div class="dropdown-content" *ngFor='let liker of blog.likedBy'>
-                    <a [routerLink]="['/user/',liker]">{{ liker }}</a>
+                    <a [routerLink]="['/public-profile/',liker]">{{ liker }}</a>
                   </div>
                 </div>
 
@@ -41,12 +41,12 @@
                     <i fa [name]="'thumbs-o-down'" [pull]="'left'"></i>
                   Dislike:&nbsp;{{ blog.dislikes }}</button>
                 <div class="dropdown-content" *ngFor='let disliker of blog.dislikedBy' [routerLink]="['/user',disliker]">
-                  <a [routerLink]="['/user/',disliker]"> {{ disliker }} </a>
+                  <a [routerLink]="['/public-profile/',disliker]"> {{ disliker }} </a>
                 </div>
               </div>
               </div>
 
-              <div class="row">
+              <div >
                 <div style="width: 100%;">
                     <button type="button" class="btn btn-outline-secondary mr-2 mb-2" (click) = 'draftComment(blog._id)' >Post Comment</button>
                 </div>

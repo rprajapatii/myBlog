@@ -3,32 +3,47 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { CategoryService } from './../../services/category.service';
+import { NotificationService } from './../../services/notification.service';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css',
+  '../../../../node_modules/font-awesome/css/font-awesome.css'
+]
 })
 
-export class NavBarComponent implements OnInit, OnChanges {
+export class NavBarComponent implements OnInit {
   categories = [];
   catagoricalBlogs;
   value = 0;
+  notifications;
+  notificationCount;
+  blogId;
+  notificationMessage;
 
   constructor(
     public authService: AuthService,
     private router: Router,
     private flashMessagesService: FlashMessagesService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private notificationService: NotificationService
   ) {
-    this.getAllCategories();
+    if (this.authService.loggedIn()) {
+      this.getAllCategories();
+      this.getAllNotifications();
+      this.getNotificationCount();
+    }
+
     this.authService.configObservable.subscribe(value => {
-      console.log('value in nav =', value);
       this.value = value;
       if (this.value === 1) {
         this.getAllCategories();
+        this.getAllNotifications();
+        this.getNotificationCount();
       } else {
         this.categories = null;
+        this.notifications = null;
       }
     });
   }
@@ -43,7 +58,6 @@ export class NavBarComponent implements OnInit, OnChanges {
   getAllCategories() {
     this.categoryService.getAllCategories().subscribe(data => {
       this.categories = data.categories;
-      //  console.log(this.categories);
     });
   }
 
@@ -51,13 +65,49 @@ export class NavBarComponent implements OnInit, OnChanges {
     this.router.navigate(['/search/' + searchText]);
   }
 
-  ngOnInit() {
+  getAllNotifications() {
+    this.notificationService.getAllNotifications().subscribe(data => {
+      console.log('notification =', data);
+      if (!data.success) {
+        this.notificationMessage = data.message;
+      } else {
+        this.notifications  = data.notifications.sort(function(a, b) {
+          console.log(a.timestamp);
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          return b.timestamp - a.timestamp;
+        });
+
+      }
+    });
   }
 
-  ngOnChanges() {
-    if (this.value === 1) {
-      this.getAllCategories();
-    }
+  getNotificationCount() {
+    this.notificationService.getNotificationCount().subscribe(data => {
+      // console.log('notification count');
+      // console.log(data);
+      if (data.success) {
+        this.notificationCount = data.count;
+      }
+    });
+  }
+
+  onNotificationClick(notificationId, notificationMessage, blogId) {
+    console.log(blogId);
+    const elementPos = this.notifications.map(function(x) {return x._id; }).indexOf(notificationId);
+    this.notifications[elementPos].seen = true;
+
+    this.notificationService.updateSeen(this.notifications).subscribe(data => {
+      // console.log('after Update');
+      // console.log(data);
+      this.getAllNotifications();
+      this.getNotificationCount();
+    this.router.navigate(['/view-blog/' + blogId]);
+    });
+
+  }
+
+  ngOnInit() {
   }
 
 }

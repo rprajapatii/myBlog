@@ -130,9 +130,7 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-    // Function to check if e-mail is taken
     checkEmail() {
-      // Function from authentication file to check if e-mail is taken
       this.authService.checkEmail(this.regForm.get('email').value).subscribe(data => {
         if (!data.success) {
         this.emailValid = false; // Return email as invalid

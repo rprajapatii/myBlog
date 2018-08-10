@@ -26,16 +26,22 @@ a.notalink{
   color: inherit;
 }
 
+.blog-post-meta > a:not([href]):not([tabindex]),
+.card-body .text-muted a:not([href]):not([tabindex]) {
+  color: #007bff;
+  cursor: pointer;
+}
+
 .outer-wrap{
  padding-top: 1rem;
 }
 
-section{
+.section{
 	margin-bottom: 20px;
 }
 
 .sub-section{
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .navbar-brand{

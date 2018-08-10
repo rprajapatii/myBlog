@@ -49,7 +49,6 @@ export class BlogService {
   }
 
   updateBlog(blog) {
-    console.log('blog', blog);
     this.createAuthHeaders();
     return this.http.put(this.domain + '/blogs/updateBlog', blog , this.options)
     .pipe( map(res => res.json() ));

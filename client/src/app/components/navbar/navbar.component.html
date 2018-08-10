@@ -11,6 +11,19 @@
           </button> -->
         </form>
         <ul class="navbar-nav flex-row flex-nowrap">
+          <li *ngIf="authService.loggedIn()" class="nav-item">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [routerLinkActive]="['active']"><i fa [name]="'bell'" [pull]="'left'"></i>
+              <span class="badge badge-danger" *ngIf = '!notificationMessage'>{{ notificationCount }}</span></a>
+            <div class="dropdown-menu">
+              <div class='dropdown-item' *ngIf = 'notificationMessage'>
+                {{ notificationMessage }}
+              </div>
+              <div *ngIf = '!notificationMessage'>
+                  <a class="dropdown-item"  *ngFor='let notification of notifications' (click) = 'onNotificationClick(notification._id,notification.notification,notification.blogId)' [class.seenClass]="notification.seen">{{ notification.notification }}</a>
+              </div>
+            </div>
+          </li>
+
           <li *ngIf="!authService.loggedIn()" class="nav-item">
             <a class="nav-link" routerLink="/login" [routerLinkActive]="['active']" >Sign In</a>
           </li>
