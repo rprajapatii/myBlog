@@ -71,12 +71,13 @@ export class NavBarComponent implements OnInit {
       if (!data.success) {
         this.notificationMessage = data.message;
       } else {
-        this.notifications  = data.notifications.sort(function(a, b) {
-          console.log(a.timestamp);
-          // Turn your strings into dates, and then subtract them
-          // to get a value that is either negative, positive, or zero.
-          return b.timestamp - a.timestamp;
-        });
+        this.notifications  = data.notifications;
+        // .sort(function(a, b) {
+        //   console.log(a.timestamp);
+        //   // Turn your strings into dates, and then subtract them
+        //   // to get a value that is either negative, positive, or zero.
+        //   return b.timestamp - a.timestamp;
+        // });
 
       }
     });

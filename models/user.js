@@ -109,12 +109,27 @@ const passwordValidator = [
 
 
 const userSchema = new Schema({
-  email: { type: String, required: true, unique: true, lowercase: true, 
-  			validate: emailValidator },
-  username: { type: String, require: true, unique: true, lowercase: true, 
-  				validate: usernameValidator },
-  password: { type: String, require: true,
-  				validate: passwordValidator }
+	email: { type: String, required: true, unique: true, lowercase: true, 
+			validate: emailValidator },
+	username: { type: String, require: true, unique: true, lowercase: true, 
+				validate: usernameValidator },
+	password: { type: String, require: true,
+					validate: passwordValidator },
+notifications: [{
+			blogId: {
+				type: String
+			},
+			notification: {
+				type: String
+			},
+			seen: {
+				type: Boolean
+			},
+			timestamp: {
+				type: String
+			  },
+
+		}]
 });
 
 

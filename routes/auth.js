@@ -16,7 +16,8 @@ module.exports = (router) => {
 					let user = new User({
 						email: req.body.email.toLowerCase(),
 						username: req.body.username.toLowerCase(),
-						password: req.body.password
+						password: req.body.password,
+						notification: null
 					});
 					user.save((err)=> {
 						if (err) {
@@ -117,7 +118,7 @@ module.exports = (router) => {
 
 	router.use((req,res,next) => {
 		const token =	req.headers['authorization'];
-		// console.log('token=',token);
+		//  console.log('token=',token);
 		if(!token){
 			res.json({ success: false, message:'No token Provided' })
 		}else{

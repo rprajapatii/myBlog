@@ -7,6 +7,7 @@ const auth = require('./routes/auth')(router);
 const blogs = require('./routes/blogs')(router);
 const category = require('./routes/category')(router);
 const search = require('./routes/search')(router);
+const notification = require('./routes/notification')(router);
 const config = require('./config/database');
 const bodyParser = require('body-parser');
 
@@ -33,10 +34,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/client/dist/client'));
+ 
 app.use('/auth', auth);
 app.use('/blogs', blogs);
-app.use('/category', category);
 app.use('/search', search);
+app.use('/category', category);
+app.use('/notification', notification);
 
 app.get('*', function(req, res){
 	res.sendFile(path.join(__dirname + '/client/dist/client/index.html'));

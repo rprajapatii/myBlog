@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Blog = require('../models/blog');
+const Notification = require('./notificationFun');
 const config = require('../config/database');
 const jwt = require('jsonwebtoken');
 
@@ -212,7 +213,8 @@ module.exports = (router) => {
                                                     if(err){
                                                         res.json({ success: false, message: 'Something went wrong.' })
                                                     }else{
-                                                        res.json({ success: true, message: 'Blog liked!' })
+                                                        res.json({ success: true, message: 'Blog liked!' });
+                                                        Notification.likenotify(user.username,blog._id,blog.title,blog.createdBy);
                                                     }
                                                 })
                                             } else {
@@ -222,7 +224,8 @@ module.exports = (router) => {
                                                     if(err){
                                                         res.json({ success: false, message: 'Something went wrong.' })
                                                     }else{
-                                                        res.json({ success: true, message: 'Blog liked!' })
+                                                        res.json({ success: true, message: 'Blog liked!' });
+                                                        Notification.likenotify(user.username,blog._id,blog.title,blog.createdBy);
                                                     }
                                                 })
                                             }
@@ -274,7 +277,8 @@ module.exports = (router) => {
                                                         res.json({ success: false, message: 'Something went wrong.' })
                                                     }else{
                                                        
-                                                        res.json({ success: true, message: 'Blog disliked!' })
+                                                        res.json({ success: true, message: 'Blog disliked!' });
+                                                        Notification.dislikenotify(user.username,blog._id, blog.title,blog.createdBy);
                                                     }
                                                 })
                                             } else {
@@ -284,7 +288,8 @@ module.exports = (router) => {
                                                     if(err){
                                                         res.json({ success: false, message: 'Something went wrong.' })
                                                     }else{
-                                                        res.json({ success: true, message: 'Blog disliked!' })
+                                                        res.json({ success: true, message: 'Blog disliked!' });
+                                                        Notification.dislikenotify(user.username,blog._id, blog.title,blog.createdBy);
                                                     }
                                                 })
                                             }

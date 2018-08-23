@@ -5,7 +5,7 @@ module.exports = (router) => {
         if( !req.params.title ) {
             res.json({ success: false, message: 'Search text is not provided.' })
         } else {
-            Blog.find({title:{$regex: new RegExp(req.params.title)}},(err,blogs) => {
+            Blog.find({title:{'$regex':req.params.title,'$options':'i'}},(err,blogs) => {
                 if(err) {
                     res.json({ success: false, message: err })
                 } else {
